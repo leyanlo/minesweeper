@@ -1,0 +1,117 @@
+/* Normalize first */
+@import '../node_modules/normalize.css/normalize.css';
+
+::selection {
+  background: hsl(225, 100%, 90%);
+}
+
+body {
+  /* Dimensions */
+  --iOSSafariToolbarHeight: 112px;
+  --headerHeight: 48px;
+  --navbarHeight: 48px;
+  --tabsHeight: 0px;
+  --safeAreaInsetTop: 0px;
+  --safeAreaInsetRight: 0px;
+  --safeAreaInsetBottom: 0px;
+  --safeAreaInsetLeft: 0px;
+  --fontXSmall: 12px;
+  --fontSmall: 14px;
+  --fontMedium: 16px;
+  --fontLarge: 18px;
+
+  /* Colors */
+  --darkGray: hsla(0, 0%, 0%, 0.8);
+  --mediumGray: hsla(0, 0%, 0%, 0.4);
+  --lightGray: hsla(0, 0%, 0%, 0.2);
+  --xLightGray: hsla(0, 0%, 0%, 0.1);
+  --linkColor: hsla(225, 100%, 50%, 0.8);
+  --bodyBackground: hsl(225, 10%, 90%);
+  --navbarBackground: hsl(225, 5%, 95%);
+  --navbarBackgroundTransparent: hsla(225, 5%, 95%, 0);
+
+  /* Z-indices */
+  --zNavbar: 1;
+
+  color: var(--darkGray);
+  font-family: 'Trebuchet MS', sans-serif;
+  line-height: 1.25;
+  letter-spacing: -0.03125em;
+  word-spacing: -0.03125em;
+  background-color: var(--bodyBackground);
+}
+
+body.SourceSansPro {
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: 0;
+  word-spacing: 0;
+}
+
+/* Browsers which partially support CSS Environment variables (iOS 11.0-11.2) */
+@supports (padding-top: constant(safe-area-inset-top)) {
+  body {
+    --safeAreaInsetTop: constant(safe-area-inset-top);
+    --safeAreaInsetRight: constant(safe-area-inset-right);
+    --safeAreaInsetBottom: constant(safe-area-inset-bottom);
+    --safeAreaInsetLeft: constant(safe-area-inset-left);
+  }
+}
+
+/* Browsers which fully support CSS Environment variables (iOS 11.2+) */
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
+    --safeAreaInsetTop: env(safe-area-inset-top);
+    --safeAreaInsetRight: env(safe-area-inset-right);
+    --safeAreaInsetBottom: env(safe-area-inset-bottom);
+    --safeAreaInsetLeft: env(safe-area-inset-left);
+  }
+}
+
+/* Tablet or landscape phone */
+@media screen and (min-width: 769px), screen and (orientation: landscape) {
+  body {
+    --navbarHeight: 32px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+  body {
+    --navbarHeight: 0px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  color: black;
+  font-family: Palatino, serif;
+  letter-spacing: 0.01875em;
+}
+
+body.SourceSerifPro h1,
+body.SourceSerifPro h2,
+body.SourceSerifPro h3,
+body.SourceSerifPro h4,
+body.SourceSerifPro h5,
+body.SourceSerifPro h6 {
+  font-family: 'Source Serif Pro', serif;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0 0 24px;
+}
+
+/* For some reason the main Gatsby div highlights on touch in iOS Safari */
+[tabindex='-1'] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+[tabindex='-1'] > * {
+  -webkit-tap-highlight-color: initial;
+}

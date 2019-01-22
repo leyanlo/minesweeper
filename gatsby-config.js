@@ -1,6 +1,7 @@
 const path = require(`path`);
 
 module.exports = {
+  pathPrefix: `/minesweeper`,
   siteMetadata: {
     title: `Leyan Lo`,
     description: `Leyan Lo’s personal website`,

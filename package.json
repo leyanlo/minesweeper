@@ -1,5 +1,5 @@
 {
-  "name": "responsive-minesweeper",
+  "name": "minesweeper",
   "description": "Minesweeper",
   "version": "1.0.0",
   "author": "Leyan Lo <leyanlo@gmail.com>",
@@ -26,11 +26,12 @@
     "styled-components": "^4.1.3"
   },
   "keywords": [
-    "responsive minesweeper"
+    "minesweeper"
   ],
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
     "format": "npm-run-all -p format:js format:css",
     "format:js": "prettier --write 'src/**/*.{js,jsx,json,yaml}'",
@@ -52,6 +53,7 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-sort-imports-es6-autofix": "^0.3.0",
     "gatsby-plugin-react-svg": "^2.0.0",
+    "gh-pages": "^2.0.1",
     "husky": "^1.3.1",
     "lint-staged": "^7.3.0",
     "npm-run-all": "^4.1.5",
@@ -65,7 +67,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/leyanlo/responsive-minesweeper"
+    "url": "https://github.com/leyanlo/minesweeper"
   },
   "husky": {
     "hooks": {

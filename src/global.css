@@ -8,9 +8,6 @@
 body {
   /* Dimensions */
   --iOSSafariToolbarHeight: 112px;
-  --headerHeight: 48px;
-  --navbarHeight: 48px;
-  --tabsHeight: 0px;
   --safeAreaInsetTop: 0px;
   --safeAreaInsetRight: 0px;
   --safeAreaInsetBottom: 0px;
@@ -24,9 +21,8 @@ body {
   --darkGray: hsla(0, 0%, 0%, 0.8);
   --mediumGray: hsla(0, 0%, 0%, 0.4);
   --lightGray: hsla(0, 0%, 0%, 0.2);
-  --xLightGray: hsla(0, 0%, 0%, 0.1);
   --linkColor: hsla(225, 100%, 50%, 0.8);
-  --bodyBackground: hsl(225, 10%, 90%);
+  --bodyBackground: #008080;
   --navbarBackground: hsl(225, 5%, 95%);
   --navbarBackgroundTransparent: hsla(225, 5%, 95%, 0);
 
@@ -56,20 +52,6 @@ body {
     --safeAreaInsetRight: env(safe-area-inset-right);
     --safeAreaInsetBottom: env(safe-area-inset-bottom);
     --safeAreaInsetLeft: env(safe-area-inset-left);
-  }
-}
-
-/* Tablet or landscape phone */
-@media screen and (min-width: 769px), screen and (orientation: landscape) {
-  body {
-    --navbarHeight: 32px;
-  }
-}
-
-/* Desktop */
-@media screen and (min-width: 1024px) {
-  body {
-    --navbarHeight: 0px;
   }
 }
 

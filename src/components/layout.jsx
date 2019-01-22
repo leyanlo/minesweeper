@@ -7,10 +7,7 @@ import styled from 'styled-components';
 import media from './styled/media';
 
 const Main = styled.main`
-  --mainMinHeight: calc(
-    100vh - var(--headerHeight) - var(--navbarHeight) -
-      var(--iOSSafariToolbarHeight)
-  );
+  --mainMinHeight: calc(100vh - var(--iOSSafariToolbarHeight));
 
   display: flex;
   flex-direction: column;
@@ -18,10 +15,9 @@ const Main = styled.main`
   padding-right: var(--safeAreaInsetRight);
   padding-bottom: calc(var(--safeAreaInsetBottom) + var(--navbarHeight));
   padding-left: var(--safeAreaInsetLeft);
-  ${props => (props['has-tabs'] ? `--tabsHeight: 40px` : ``)};
   ${media.desktop`
     /* No toolbars */
-    --mainMinHeight: calc(100vh - var(--headerHeight));
+    --mainMinHeight: 100vh;
   `};
 `;
 

@@ -1,5 +1,5 @@
-# Leyan Lo
-Website source. Built with [Gatsby](https://www.gatsbyjs.org/).
+# Minesweeper
+Built with [Gatsby](https://www.gatsbyjs.org/).
 
 ## Install
 

@@ -3,9 +3,9 @@ const path = require(`path`);
 module.exports = {
   pathPrefix: `/minesweeper`,
   siteMetadata: {
-    title: `Leyan Lo`,
-    description: `Leyan Lo’s personal website`,
-    keywords: `software, violin, cubing`
+    title: `Minesweeper`,
+    description: `Responsive minesweeper`,
+    keywords: `minesweeper, responsive, gatsby`
   },
   plugins: [
     {
@@ -19,11 +19,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Leyan Lo`,
-        short_name: `Leyan Lo`,
+        name: `Minesweeper`,
+        short_name: `Minesweeper`,
         start_url: `/`,
-        background_color: `#E3E4E8`,
-        theme_color: `#001F7F`,
+        background_color: `#008080`,
+        theme_color: `#BDBDBD`,
         display: `minimal-ui`,
         icon: `src/images/logo.png`
       }

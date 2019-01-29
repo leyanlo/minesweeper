@@ -1,6 +1,6 @@
 <!--
 # 1. Generate logo.png with svgexport
-npm i svgexport -g
+npm install svgexport -g
 svgexport src/images/logo.svg src/images/logo.png 512:512
 # 2. Generate apple-touch-icon.png, logo-fb.png
 svgexport src/images/logo.svg static/apple-touch-icon.png 180:180

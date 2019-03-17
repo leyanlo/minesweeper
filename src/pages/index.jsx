@@ -22,6 +22,18 @@ export const Desktop = styled.div`
   background-color: var(--bodyBackground);
 `;
 
+const onClickMenuItem = event => {
+  if (event.currentTarget.parentElement.classList.contains('-open')) {
+    event.currentTarget.blur();
+  } else {
+    event.currentTarget.parentElement.classList.add('-open');
+  }
+};
+
+const onBlurMenuItem = event => {
+  event.currentTarget.parentElement.classList.remove('-open');
+};
+
 export default () => (
   <Layout>
     <Desktop>
@@ -32,7 +44,12 @@ export default () => (
         <nav role="navigation">
           <WindowMenu>
             <WindowMenuItem>
-              <button type="button" aria-haspopup="true">
+              <button
+                type="button"
+                aria-haspopup="true"
+                onClick={onClickMenuItem}
+                onBlur={onBlurMenuItem}
+              >
                 Game
               </button>
               <WindowSubMenu className="dropdown" aria-label="submenu">

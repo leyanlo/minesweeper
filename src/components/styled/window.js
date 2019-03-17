@@ -43,12 +43,19 @@ export const WindowMenuItem = styled.li`
       box-shadow: 1px 1px 0 white inset, -1px -1px 0 #707070 inset;
     }
     &:active,
-    &:focus {
+    &:focus,
+    &.-open {
       top: 1px;
       left: 1px;
       outline: none;
       box-shadow: 1px 1px 0 #707070 inset, -1px -1px 0 white inset;
     }
+  }
+  &.-open > button {
+    top: 1px;
+    left: 1px;
+    outline: none;
+    box-shadow: 1px 1px 0 #707070 inset, -1px -1px 0 white inset;
   }
 `;
 
@@ -65,9 +72,7 @@ export const WindowSubMenu = styled.ul`
   box-shadow: 1px 1px 0 white inset, -1px -1px 0 #707070 inset;
   visibility: hidden;
   opacity: 0;
-
-  ${WindowMenuItem}:focus > &,
-  ${WindowMenuItem}:focus-within > & {
+  ${WindowMenuItem}.-open > & {
     display: block;
     visibility: visible;
     opacity: 1;

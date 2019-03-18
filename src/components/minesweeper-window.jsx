@@ -1,3 +1,4 @@
+import * as keymirror from 'keymirror';
 import React from 'react';
 
 import {
@@ -6,13 +7,26 @@ import {
   WindowHeaderIcon,
   WindowMenu,
   WindowMenuItem,
+  WindowMenuItemButton,
   WindowSubMenu,
   WindowSubMenuItem,
+  WindowSubMenuItemButton,
   WindowSubMenuSeparator
 } from './styled/window';
 import MinesweeperIcon from '../images/minesweeper-icon.png';
 
+const LEVEL = keymirror({
+  BEGINNER: null,
+  INTERMEDIATE: null,
+  EXPERT: null
+});
+
 class MinesweeperWindow extends React.PureComponent {
+  state = {
+    level: LEVEL.BEGINNER,
+    hasMarks: false
+  };
+
   onClickMenuItem = event => {
     if (event.currentTarget.parentElement.classList.contains('-open')) {
       event.currentTarget.blur();
@@ -26,6 +40,8 @@ class MinesweeperWindow extends React.PureComponent {
   };
 
   render() {
+    const { level, hasMarks } = this.state;
+
     return (
       <Window>
         <WindowHeader>
@@ -34,31 +50,50 @@ class MinesweeperWindow extends React.PureComponent {
         <nav role="navigation">
           <WindowMenu>
             <WindowMenuItem>
-              <button
+              <WindowMenuItemButton
                 type="button"
                 aria-haspopup="true"
                 onClick={this.onClickMenuItem}
                 onBlur={this.onBlurMenuItem}
               >
                 Game
-              </button>
+              </WindowMenuItemButton>
               <WindowSubMenu className="dropdown" aria-label="submenu">
                 <WindowSubMenuItem>
-                  <button type="button">New</button>
+                  <WindowSubMenuItemButton type="button">
+                    New
+                  </WindowSubMenuItemButton>
                 </WindowSubMenuItem>
                 <WindowSubMenuSeparator />
                 <WindowSubMenuItem>
-                  <button type="button">Beginner</button>
+                  <WindowSubMenuItemButton
+                    type="button"
+                    checked={level === LEVEL.BEGINNER}
+                  >
+                    Beginner
+                  </WindowSubMenuItemButton>
                 </WindowSubMenuItem>
                 <WindowSubMenuItem>
-                  <button type="button">Intermediate</button>
+                  <WindowSubMenuItemButton
+                    type="button"
+                    checked={level === LEVEL.INTERMEDIATE}
+                  >
+                    Intermediate
+                  </WindowSubMenuItemButton>
                 </WindowSubMenuItem>
                 <WindowSubMenuItem>
-                  <button type="button">Expert</button>
+                  <WindowSubMenuItemButton
+                    type="button"
+                    checked={level === LEVEL.EXPERT}
+                  >
+                    Expert
+                  </WindowSubMenuItemButton>
                 </WindowSubMenuItem>
                 <WindowSubMenuSeparator />
                 <WindowSubMenuItem>
-                  <button type="button">Marks (?)</button>
+                  <WindowSubMenuItemButton type="button" checked={hasMarks}>
+                    Marks (?)
+                  </WindowSubMenuItemButton>
                 </WindowSubMenuItem>
               </WindowSubMenu>
             </WindowMenuItem>

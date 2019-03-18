@@ -35,23 +35,24 @@ export const WindowMenu = styled.ul`
 
 export const WindowMenuItem = styled.li`
   position: relative;
+`;
 
-  & > button {
-    background-color: transparent;
-    border: none;
-    &:hover {
-      box-shadow: 1px 1px 0 white inset, -1px -1px 0 #707070 inset;
-    }
-    &:active,
-    &:focus,
-    &.-open {
-      top: 1px;
-      left: 1px;
-      outline: none;
-      box-shadow: 1px 1px 0 #707070 inset, -1px -1px 0 white inset;
-    }
+export const WindowMenuItemButton = styled.button`
+  background-color: transparent;
+  border: none;
+  &:hover {
+    box-shadow: 1px 1px 0 white inset, -1px -1px 0 #707070 inset;
   }
-  &.-open > button {
+  &:active,
+  &:focus,
+  &.-open {
+    top: 1px;
+    left: 1px;
+    outline: none;
+    box-shadow: 1px 1px 0 #707070 inset, -1px -1px 0 white inset;
+  }
+
+  ${WindowMenuItem}.-open > & {
     top: 1px;
     left: 1px;
     outline: none;
@@ -81,20 +82,25 @@ export const WindowSubMenu = styled.ul`
 
 export const WindowSubMenuItem = styled.li`
   list-style-type: none;
+`;
 
-  & > button {
-    display: flex;
-    width: 100%;
-    padding: 1px 18px;
-    background-color: transparent;
-    border: none;
-    &:hover,
-    &:active,
-    &:focus {
-      color: white;
-      background-color: #007;
-      outline: none;
-    }
+export const WindowSubMenuItemButton = styled.button`
+  display: flex;
+  width: 100%;
+  padding: 1px 18px;
+  background-color: transparent;
+  border: none;
+  &:hover,
+  &:active,
+  &:focus {
+    color: white;
+    background-color: #007;
+    outline: none;
+  }
+  &::before {
+    content: ${props => (props.checked ? '"✓"' : '')};
+    position: absolute;
+    left: 6px;
   }
 `;
 

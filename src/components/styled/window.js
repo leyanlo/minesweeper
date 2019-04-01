@@ -48,6 +48,7 @@ export const WindowMenuItemButton = styled.button`
   &.-open {
     top: 1px;
     left: 1px;
+    color: black; /* needed for Safari */
     outline: none;
     box-shadow: 1px 1px 0 #707070 inset, -1px -1px 0 white inset;
   }

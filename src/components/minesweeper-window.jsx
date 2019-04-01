@@ -22,21 +22,42 @@ const LEVEL = keymirror({
 });
 
 class MinesweeperWindow extends React.PureComponent {
+  gameMenuButtonRef = React.createRef();
+
   state = {
     level: LEVEL.BEGINNER,
     hasMarks: false
   };
 
-  onClickMenuItem = event => {
+  componentDidMount() {
+    document.body.addEventListener(
+      'click',
+      (this.handleClickBody = event => {
+        if (event.target === this.gameMenuButtonRef.current) {
+          return;
+        }
+        this.handleCloseGameMenu(event);
+      }),
+      false
+    );
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this.handleClickBody, false);
+    this.handleClickBody = null;
+  }
+
+  handleOpenGameMenu = event => {
     if (event.currentTarget.parentElement.classList.contains('-open')) {
+      this.handleCloseGameMenu();
       event.currentTarget.blur();
     } else {
       event.currentTarget.parentElement.classList.add('-open');
     }
   };
 
-  onBlurMenuItem = event => {
-    event.currentTarget.parentElement.classList.remove('-open');
+  handleCloseGameMenu = () => {
+    this.gameMenuButtonRef.current.parentElement.classList.remove('-open');
   };
 
   render() {
@@ -51,10 +72,10 @@ class MinesweeperWindow extends React.PureComponent {
           <WindowMenu>
             <WindowMenuItem>
               <WindowMenuItemButton
+                ref={this.gameMenuButtonRef}
                 type="button"
                 aria-haspopup="true"
-                onClick={this.onClickMenuItem}
-                onBlur={this.onBlurMenuItem}
+                onClick={this.handleOpenGameMenu}
               >
                 Game
               </WindowMenuItemButton>

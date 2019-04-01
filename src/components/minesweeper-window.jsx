@@ -1,4 +1,3 @@
-import * as keymirror from 'keymirror';
 import React from 'react';
 
 import {
@@ -15,11 +14,11 @@ import {
 } from './styled/window';
 import MinesweeperIcon from '../images/minesweeper-icon.png';
 
-const LEVEL = keymirror({
-  BEGINNER: null,
-  INTERMEDIATE: null,
-  EXPERT: null
-});
+const LEVEL = {
+  BEGINNER: 0,
+  INTERMEDIATE: 1,
+  EXPERT: 2
+};
 
 class MinesweeperWindow extends React.PureComponent {
   gameMenuButtonRef = React.createRef();

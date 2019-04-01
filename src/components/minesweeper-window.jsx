@@ -59,6 +59,23 @@ class MinesweeperWindow extends React.PureComponent {
     this.gameMenuButtonRef.current.parentElement.classList.remove('-open');
   };
 
+  initLevel = () => {
+    // TODO
+  };
+
+  setLevel = level => () => {
+    const { level: prevLevel } = this.state;
+    if (level === prevLevel) {
+      return;
+    }
+    this.setState({ level });
+    this.initLevel();
+  };
+
+  setMarks = hasMarks => () => {
+    this.setState({ hasMarks });
+  };
+
   render() {
     const { level, hasMarks } = this.state;
 
@@ -80,7 +97,10 @@ class MinesweeperWindow extends React.PureComponent {
               </WindowMenuItemButton>
               <WindowSubMenu className="dropdown" aria-label="submenu">
                 <WindowSubMenuItem>
-                  <WindowSubMenuItemButton type="button">
+                  <WindowSubMenuItemButton
+                    type="button"
+                    onClick={this.initLevel()}
+                  >
                     New
                   </WindowSubMenuItemButton>
                 </WindowSubMenuItem>
@@ -89,6 +109,7 @@ class MinesweeperWindow extends React.PureComponent {
                   <WindowSubMenuItemButton
                     type="button"
                     checked={level === LEVEL.BEGINNER}
+                    onClick={this.setLevel(LEVEL.BEGINNER)}
                   >
                     Beginner
                   </WindowSubMenuItemButton>
@@ -97,6 +118,7 @@ class MinesweeperWindow extends React.PureComponent {
                   <WindowSubMenuItemButton
                     type="button"
                     checked={level === LEVEL.INTERMEDIATE}
+                    onClick={this.setLevel(LEVEL.INTERMEDIATE)}
                   >
                     Intermediate
                   </WindowSubMenuItemButton>
@@ -105,13 +127,18 @@ class MinesweeperWindow extends React.PureComponent {
                   <WindowSubMenuItemButton
                     type="button"
                     checked={level === LEVEL.EXPERT}
+                    onClick={this.setLevel(LEVEL.EXPERT)}
                   >
                     Expert
                   </WindowSubMenuItemButton>
                 </WindowSubMenuItem>
                 <WindowSubMenuSeparator />
                 <WindowSubMenuItem>
-                  <WindowSubMenuItemButton type="button" checked={hasMarks}>
+                  <WindowSubMenuItemButton
+                    type="button"
+                    checked={hasMarks}
+                    onClick={this.setMarks(!hasMarks)}
+                  >
                     Marks (?)
                   </WindowSubMenuItemButton>
                 </WindowSubMenuItem>

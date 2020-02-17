@@ -4,8 +4,8 @@ module.exports = {
   pathPrefix: `/minesweeper`,
   siteMetadata: {
     title: `Minesweeper`,
-    description: `Responsive minesweeper`,
-    keywords: `minesweeper, responsive, gatsby`
+    description: `JS minesweeper`,
+    keywords: `minesweeper, js, gatsby`
   },
   plugins: [
     {

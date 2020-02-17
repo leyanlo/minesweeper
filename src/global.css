@@ -1,6 +1,13 @@
 /* Normalize first */
 @import '../node_modules/normalize.css/normalize.css';
 
+@font-face {
+  font-family: 'Digital-7 Mono';
+  font-display: fallback;
+  src: url('fonts/digit-7-mono.woff2') format('woff2'),
+    url('fonts/digit-7-mono.woff') format('woff');
+}
+
 ::selection {
   background: hsl(225, 100%, 90%);
 }

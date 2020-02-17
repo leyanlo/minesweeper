@@ -12,6 +12,7 @@ import {
   WindowSubMenuItemButton,
   WindowSubMenuSeparator
 } from './styled/window';
+import MinesweeperBody from './minesweeper-body';
 import MinesweeperIcon from '../images/minesweeper-icon.png';
 
 const LEVEL = {
@@ -25,7 +26,10 @@ class MinesweeperWindow extends React.PureComponent {
 
   state = {
     level: LEVEL.BEGINNER,
-    hasMarks: false
+    hasMarks: false,
+    board: null,
+    numMines: 10,
+    timer: 0
   };
 
   componentDidMount() {
@@ -77,7 +81,7 @@ class MinesweeperWindow extends React.PureComponent {
   };
 
   render() {
-    const { level, hasMarks } = this.state;
+    const { board, level, hasMarks, numMines, timer } = this.state;
 
     return (
       <Window>
@@ -146,6 +150,7 @@ class MinesweeperWindow extends React.PureComponent {
             </WindowMenuItem>
           </WindowMenu>
         </nav>
+        <MinesweeperBody board={board} numMines={numMines} timer={timer} />
       </Window>
     );
   }

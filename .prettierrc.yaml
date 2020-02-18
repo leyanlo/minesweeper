@@ -1,5 +1,0 @@
-singleQuote: true
-overrides:
-  - files: '*.yaml'
-    options:
-      printWidth: 120

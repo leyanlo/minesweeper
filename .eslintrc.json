@@ -1,29 +1,39 @@
 {
   "root": true,
-  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react"],
-  "env": {
-    "browser": true
-  },
-  "parser": "babel-eslint",
-  "plugins": ["sort-imports-es6-autofix"],
+  "env": { "browser": true },
+  "parserOptions": { "project": "./tsconfig.json" },
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
+    "plugin:testing-library/recommended",
+    "plugin:testing-library/react",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint",
+    "prettier/react"
+  ],
+  "plugins": ["simple-import-sort"],
+
   "rules": {
-    "import/order": [
+    "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
-        "groups": [["builtin", "external", "internal"]],
-        "newlines-between": "always"
+        "allowExpressions": true
       }
     ],
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+
+    // Auto-sort imports
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/sort": "error",
+    "arrow-body-style": ["error"],
     "no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
-    "react/no-array-index-key": "none",
-    "sort-imports-es6-autofix/sort-imports-es6": [
-      "error",
-      {
-        "ignoreCase": false,
-        "ignoreMemberSort": false,
-        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
-      }
-    ]
+    "no-unused-vars": "error",
+
+    // Using a type system makes it safe enough to spread props
+    "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "off"
   }
 }

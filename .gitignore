@@ -1,9 +1,8 @@
-# Project dependencies
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-.cache
-.idea
-node_modules
-
-# Build directory
-/public
+*.log*
+.cache/
 .DS_Store
+.env*
+.eslintcache
+coverage/
+node_modules/
+public/

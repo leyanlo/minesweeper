@@ -1,55 +1,27 @@
-const path = require(`path`);
+const siteMetadata = {
+  name: 'Minesweeper',
+  description: 'JS minesweeper',
+  keywords: 'minesweeper, js, gatsby',
+};
 
 module.exports = {
-  pathPrefix: `/minesweeper`,
-  siteMetadata: {
-    title: `Minesweeper`,
-    description: `JS minesweeper`,
-    keywords: `minesweeper, js, gatsby`
-  },
+  siteMetadata,
   plugins: [
+    'gatsby-plugin-emotion',
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
-        trackingId: `UA-126651057-1`,
-        head: true,
-        respectDNT: true
-      }
+        ...siteMetadata,
+        display: 'minimal-ui',
+        theme_color: '#BDBDBD',
+        background_color: '#3A6EA5',
+        icon: 'src/images/logo.png',
+        lang: 'en-US',
+        start_url: '/',
+      },
     },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Minesweeper`,
-        short_name: `Minesweeper`,
-        start_url: `/`,
-        background_color: `#008080`,
-        theme_color: `#BDBDBD`,
-        display: `minimal-ui`,
-        icon: `src/images/logo.png`
-      }
-    },
-    `gatsby-plugin-offline`,
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-react-svg`,
-      options: {
-        include: /images/
-      }
-    },
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-styled-components`,
-      options: {
-        displayName: false
-      }
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: path.join(__dirname, `src`, `images`)
-      }
-    },
-    `gatsby-transformer-sharp`
-  ]
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-typescript',
+    'gatsby-plugin-offline',
+  ],
 };

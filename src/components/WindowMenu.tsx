@@ -42,7 +42,7 @@ const MenuItem = ({
         ? [
             css`
               ::before {
-                content: '✔';
+                content: '✓';
                 position: absolute;
                 margin-left: -13px;
               }

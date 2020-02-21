@@ -150,11 +150,13 @@ const WindowMenu = ({
               <MenuItem
                 key={l}
                 onClick={({ currentTarget }) => {
-                  if (l !== level) {
-                    setLevel(l);
-                    // TODO: reset game
+                  if (l === level) {
+                    currentTarget.blur();
+                    return;
                   }
-                  currentTarget.blur();
+                  setLevel(l);
+                  // TODO: reset game
+                  setOpen(false);
                 }}
                 isChecked={l === level}
               >

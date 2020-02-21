@@ -12,7 +12,7 @@ export default function IndexPage(): JSX.Element {
           align-items: center;
           display: flex;
           justify-content: center;
-          min-height: 100vh;
+          min-height: 100%;
         `}
       >
         <Window />

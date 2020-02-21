@@ -23,6 +23,10 @@ export function Layout({ children }: LayoutProps): JSX.Element {
         url(${Digit7MonoWoff}) format('woff');
     }
     
+    html, body, #___gatsby, #gatsby-focus-wrapper {
+      height: 100%;
+    }
+    
     body {
       -webkit-font-smoothing: antialiased;
       background-color: #3A6EA5;

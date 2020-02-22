@@ -92,13 +92,9 @@ const WindowBody = ({
               display: flex;
               justify-content: center;
               align-items: center;
-              width: 26px;
-              height: 26px;
               background-color: #bdbdbd;
               padding: 0;
-              font-size: 15px;
               border: 1px solid #7b7b7b;
-              margin-top: -2px;
             `}
             onClick={() => {
               resetGame(level);
@@ -110,6 +106,9 @@ const WindowBody = ({
               css={css`
                 border: 2px solid;
                 border-color: #fff #7b7b7b #7b7b7b #fff;
+                width: 23px;
+                height: 23px;
+                font-size: 14px;
               `}
             >
               🙂

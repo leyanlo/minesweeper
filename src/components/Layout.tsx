@@ -9,6 +9,8 @@ import { Helmet } from 'react-helmet';
 
 import Digit7MonoWoff from '../fonts/digit-7-mono.woff';
 import Digit7MonoWoff2 from '../fonts/digit-7-mono.woff2';
+import MineSweeperWoff from '../fonts/mine-sweeper.woff';
+import MineSweeperWoff2 from '../fonts/mine-sweeper.woff2';
 
 export interface LayoutProps {
   children: React.ReactNode;
@@ -21,6 +23,12 @@ export function Layout({ children }: LayoutProps): JSX.Element {
       font-family: 'Digital-7 Mono';
       src: url(${Digit7MonoWoff2}) format('woff2'),
         url(${Digit7MonoWoff}) format('woff');
+    }
+    
+    @font-face {
+      font-family: 'MINE-SWEEPER';
+      src: url(${MineSweeperWoff2}) format('woff2'),
+        url(${MineSweeperWoff}) format('woff');
     }
     
     html, body, #___gatsby, #gatsby-focus-wrapper {

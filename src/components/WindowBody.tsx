@@ -1,5 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import React from 'react';
 
 import { Level } from './utils';
 
@@ -49,6 +50,29 @@ const MinesweeperHeadingButton = styled.button`
   padding: 0;
 `;
 
+const getColor = (cell: number): string => {
+  switch (cell) {
+    case 1:
+      return '#0700FF';
+    case 2:
+      return '#007B01';
+    case 3:
+      return '#FE0201';
+    case 4:
+      return '#01007B';
+    case 5:
+      return '#7B0000';
+    case 6:
+      return '#007B7B';
+    case 7:
+      return '#000000';
+    case 8:
+      return '#7B7B7B';
+    default:
+      return 'black';
+  }
+};
+
 const WindowBody = ({
   mines,
   startMs,
@@ -86,12 +110,29 @@ const WindowBody = ({
       </MinesweeperSection>
       <MinesweeperSection>
         {board.map(row => (
-          <>
+          <div
+            css={css`
+              display: flex;
+            `}
+          >
             {row.map(cell => (
-              <span>{cell}</span>
+              <div
+                css={css`
+                  width: 16px;
+                  height: 16px;
+                  border: 1px solid #7b7b7b;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-family: 'MINE-SWEEPER', sans-serif;
+                  font-size: 9px;
+                  color: ${getColor(cell)};
+                `}
+              >
+                {cell === -1 ? '*' : !!cell && cell}
+              </div>
             ))}
-            <br />
-          </>
+          </div>
         ))}
       </MinesweeperSection>
     </StyledMinesweeperBody>

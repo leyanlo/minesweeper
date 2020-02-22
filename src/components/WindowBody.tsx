@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import { Level, VisuallyHidden } from './utils';
 
-const MinesweeperSection = styled.section`
+const BodySection = styled.section`
   border: 2px solid;
   border-color: #7d7d7d #fff #fff #7d7d7d;
   :not(:last-child) {
@@ -12,7 +12,7 @@ const MinesweeperSection = styled.section`
   }
 `;
 
-const MinesweeperHeadingNumber = styled.div`
+const HeadingNumber = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -72,7 +72,7 @@ const WindowBody = ({
         box-shadow: inset -1px -1px #7b7b7b, inset 1px 1px white;
       `}
     >
-      <MinesweeperSection>
+      <BodySection>
         <div
           css={css`
             display: flex;
@@ -81,9 +81,7 @@ const WindowBody = ({
             padding: 3px 5px;
           `}
         >
-          <MinesweeperHeadingNumber>
-            {mines.toString().padStart(3, '0')}
-          </MinesweeperHeadingNumber>
+          <HeadingNumber>{mines.toString().padStart(3, '0')}</HeadingNumber>
           <button
             type="button"
             css={css`
@@ -106,7 +104,8 @@ const WindowBody = ({
                   outline: none;
                 }
                 :before {
-                  content: '😮';
+                  border: none;
+                  padding-top: 3px;
                 }
               }
               :focus {
@@ -122,12 +121,10 @@ const WindowBody = ({
           >
             <VisuallyHidden>New game</VisuallyHidden>
           </button>
-          <MinesweeperHeadingNumber>
-            {time.toString().padStart(3, '0')}
-          </MinesweeperHeadingNumber>
+          <HeadingNumber>{time.toString().padStart(3, '0')}</HeadingNumber>
         </div>
-      </MinesweeperSection>
-      <MinesweeperSection>
+      </BodySection>
+      <BodySection>
         {board.map(row => (
           <div
             css={css`
@@ -155,7 +152,7 @@ const WindowBody = ({
             ))}
           </div>
         ))}
-      </MinesweeperSection>
+      </BodySection>
     </div>
   );
 };

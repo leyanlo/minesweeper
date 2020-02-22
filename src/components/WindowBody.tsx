@@ -4,15 +4,6 @@ import styled from '@emotion/styled';
 
 import { Level } from './utils';
 
-const StyledMinesweeperBody = styled.div`
-  padding: 7px;
-  background-color: #bdbdbd;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #dedede #000 #000 #dedede;
-  box-shadow: inset -1px -1px #7b7b7b, inset 1px 1px white;
-`;
-
 const MinesweeperSection = styled.section`
   border: 2px solid;
   border-color: #7d7d7d #fff #fff #7d7d7d;
@@ -21,33 +12,18 @@ const MinesweeperSection = styled.section`
   }
 `;
 
-const MinesweeperHeading = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 4px;
-`;
-
 const MinesweeperHeadingNumber = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  height: 23px;
-  padding-top: 4px;
+  height: 25px;
+  padding-top: 2px;
   color: #ff0201;
-  font-size: 29px;
+  font-size: 30px;
   font-family: 'Digital-7 Mono', sans-serif;
   background: black;
-`;
-
-const MinesweeperHeadingButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 26px;
-  height: 26px;
-  background-color: #bdbdbd;
-  box-shadow: inset -1px -1px #7b7b7b, inset 1px 1px white;
-  padding: 0;
+  border: 1px solid;
+  border-color: #808080 #fff #fff #808080;
 `;
 
 const getColor = (cell: number): string => {
@@ -88,25 +64,61 @@ const WindowBody = ({
 }): JSX.Element => {
   const time = startMs ? (Date.now() - startMs) * 1000 : 0;
   return (
-    <StyledMinesweeperBody>
+    <div
+      css={css`
+        padding: 7px;
+        background-color: #bdbdbd;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #dedede #000 #000 #dedede;
+        box-shadow: inset -1px -1px #7b7b7b, inset 1px 1px white;
+      `}
+    >
       <MinesweeperSection>
-        <MinesweeperHeading>
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 3px 5px;
+          `}
+        >
           <MinesweeperHeadingNumber>
             {mines.toString().padStart(3, '0')}
           </MinesweeperHeadingNumber>
-          <MinesweeperHeadingButton
+          <button
+            type="button"
+            css={css`
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 26px;
+              height: 26px;
+              background-color: #bdbdbd;
+              padding: 0;
+              font-size: 15px;
+              border: 1px solid #7b7b7b;
+              margin-top: -2px;
+            `}
             onClick={() => {
               resetGame(level);
             }}
           >
-            <span role="img" aria-label="smile">
+            <span
+              role="img"
+              aria-label="smile"
+              css={css`
+                border: 2px solid;
+                border-color: #fff #7b7b7b #7b7b7b #fff;
+              `}
+            >
               🙂
             </span>
-          </MinesweeperHeadingButton>
+          </button>
           <MinesweeperHeadingNumber>
             {time.toString().padStart(3, '0')}
           </MinesweeperHeadingNumber>
-        </MinesweeperHeading>
+        </div>
       </MinesweeperSection>
       <MinesweeperSection>
         {board.map(row => (
@@ -137,7 +149,7 @@ const WindowBody = ({
           </div>
         ))}
       </MinesweeperSection>
-    </StyledMinesweeperBody>
+    </div>
   );
 };
 

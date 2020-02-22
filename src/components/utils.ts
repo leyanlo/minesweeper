@@ -1,3 +1,5 @@
+import styled from '@emotion/styled';
+
 export enum Level {
   Beginner = 'Beginner',
   Intermediate = 'Intermediate',
@@ -21,6 +23,7 @@ export const BOARD_INFO = {
     mines: 99,
   },
 };
+
 const incrementNeighbors = ({
   board,
   row,
@@ -46,6 +49,7 @@ const incrementNeighbors = ({
     }
   }
 };
+
 export const createBoard = (level: Level): number[][] => {
   const { rows, columns, mines } = BOARD_INFO[level];
   const board = [...Array(rows)].map(() => [...Array(columns)].map(() => 0));
@@ -67,3 +71,13 @@ export const createBoard = (level: Level): number[][] => {
   }
   return board;
 };
+
+export const VisuallyHidden = styled.div`
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+`;

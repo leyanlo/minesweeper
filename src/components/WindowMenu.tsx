@@ -121,6 +121,7 @@ const WindowMenu = ({
           css={[buttonCss, ...(isOpen ? [buttonHighlightCss] : [])]}
           onClick={({ currentTarget }) => {
             setOpen(!isOpen);
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
             currentTarget.blur();
           }}
         >
@@ -151,6 +152,7 @@ const WindowMenu = ({
                 key={l}
                 onClick={({ currentTarget }) => {
                   if (l === level) {
+                    // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
                     currentTarget.blur();
                     return;
                   }
@@ -167,6 +169,7 @@ const WindowMenu = ({
               isChecked={hasMarks}
               onClick={({ currentTarget }) => {
                 setMarks(!hasMarks);
+                // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
                 currentTarget.blur();
               }}
             >

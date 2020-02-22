@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
-import { Level } from './utils';
+import { Level, VisuallyHidden } from './utils';
 
 const MinesweeperSection = styled.section`
   border: 2px solid;
@@ -40,8 +40,6 @@ const getColor = (cell: number): string => {
       return '#7B0000';
     case 6:
       return '#007B7B';
-    case 7:
-      return '#000000';
     case 8:
       return '#7B7B7B';
     default:
@@ -95,24 +93,34 @@ const WindowBody = ({
               background-color: #bdbdbd;
               padding: 0;
               border: 1px solid #7b7b7b;
-            `}
-            onClick={() => {
-              resetGame(level);
-            }}
-          >
-            <span
-              role="img"
-              aria-label="smile"
-              css={css`
+              :before {
+                content: '🙂';
                 border: 2px solid;
                 border-color: #fff #7b7b7b #7b7b7b #fff;
                 width: 23px;
                 height: 23px;
                 font-size: 14px;
-              `}
-            >
-              🙂
-            </span>
+              }
+              :active {
+                :focus {
+                  outline: none;
+                }
+                :before {
+                  content: '😮';
+                }
+              }
+              :focus {
+                outline: 1px dotted black;
+                outline-offset: -5px;
+              }
+            `}
+            onClick={({ currentTarget }) => {
+              resetGame(level);
+              // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
+              currentTarget.blur();
+            }}
+          >
+            <VisuallyHidden>New game</VisuallyHidden>
           </button>
           <MinesweeperHeadingNumber>
             {time.toString().padStart(3, '0')}

@@ -1,7 +1,7 @@
 import { css } from '@emotion/core';
 import React from 'react';
 
-import { Level } from './types';
+import { Level } from './utils';
 
 const buttonHighlightCss = css`
   background: #316ac5;
@@ -72,14 +72,14 @@ const MenuDivider = (): JSX.Element => (
 
 const WindowMenu = ({
   level,
-  setLevel,
   hasMarks,
   setMarks,
+  resetGame,
 }: {
   level: Level;
-  setLevel: (level: Level) => void;
   hasMarks: boolean;
   setMarks: (hasMarks: boolean) => void;
+  resetGame: (level: Level) => void;
 }): JSX.Element => {
   const [isOpen, setOpen] = React.useState<boolean>(false);
 
@@ -139,7 +139,7 @@ const WindowMenu = ({
           >
             <MenuItem
               onClick={() => {
-                // TODO: reset game
+                resetGame(level);
                 setOpen(false);
               }}
             >
@@ -154,8 +154,7 @@ const WindowMenu = ({
                     currentTarget.blur();
                     return;
                   }
-                  setLevel(l);
-                  // TODO: reset game
+                  resetGame(l);
                   setOpen(false);
                 }}
                 isChecked={l === level}

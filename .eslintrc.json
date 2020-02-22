@@ -29,6 +29,8 @@
     "import/order": "off",
     "simple-import-sort/sort": "error",
     "arrow-body-style": ["error"],
+    "no-bitwise": "off",
+    "no-plusplus": "off",
     "no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
     "no-unused-vars": "error",
 

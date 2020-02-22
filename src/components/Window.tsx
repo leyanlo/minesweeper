@@ -3,25 +3,24 @@ import { css, jsx } from '@emotion/core';
 import React from 'react';
 
 import MinesweeperIcon from '../images/minesweeper-icon.png';
-import { Level } from './types';
+import { BOARD_INFO, createBoard, Level } from './utils';
 import WindowBody from './WindowBody';
 import WindowMenu from './WindowMenu';
-
-const NUM_MINES = {
-  Beginner: 10,
-  Intermediate: 40,
-  Expert: 99,
-};
 
 const Window = (): JSX.Element => {
   const [level, setLevel] = React.useState<Level>(Level.Beginner);
   const [hasMarks, setMarks] = React.useState<boolean>(false);
-  // eslint-disable-next-line no-unused-vars
-  const [numMines, setNumMines] = React.useState<number>(NUM_MINES[level]);
-  // eslint-disable-next-line no-unused-vars
-  const [board, setBoard] = React.useState<number[][]>([[]]);
-  // eslint-disable-next-line no-unused-vars
+  const [mines, setMines] = React.useState<number>(BOARD_INFO[level].mines);
+  const [board, setBoard] = React.useState<number[][]>(createBoard(level));
   const [startMs, setStartMs] = React.useState<number | null>(null);
+
+  const resetGame = React.useCallback((l: Level) => {
+    setLevel(l);
+    setMines(BOARD_INFO[l].mines);
+    setBoard(createBoard(l));
+    setStartMs(null);
+  }, []);
+
   return (
     <div
       css={css`
@@ -61,11 +60,17 @@ const Window = (): JSX.Element => {
         </header>
         <WindowMenu
           level={level}
-          setLevel={setLevel}
           hasMarks={hasMarks}
           setMarks={setMarks}
+          resetGame={resetGame}
         />
-        <WindowBody numMines={numMines} startMs={startMs} />
+        <WindowBody
+          mines={mines}
+          startMs={startMs}
+          board={board}
+          level={level}
+          resetGame={resetGame}
+        />
       </article>
     </div>
   );

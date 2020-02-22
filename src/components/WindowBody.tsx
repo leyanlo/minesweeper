@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
+import { Level } from './utils';
+
 const StyledMinesweeperBody = styled.div`
   padding: 7px;
   background-color: #bdbdbd;
@@ -48,11 +50,17 @@ const MinesweeperHeadingButton = styled.button`
 `;
 
 const WindowBody = ({
-  numMines,
+  mines,
   startMs,
+  board,
+  level,
+  resetGame,
 }: {
-  numMines: number;
+  mines: number;
   startMs: number | null;
+  board: number[][];
+  level: Level;
+  resetGame: (level: Level) => void;
 }): JSX.Element => {
   const time = startMs ? (Date.now() - startMs) * 1000 : 0;
   return (
@@ -60,9 +68,13 @@ const WindowBody = ({
       <MinesweeperSection>
         <MinesweeperHeading>
           <MinesweeperHeadingNumber>
-            {numMines.toString().padStart(3, '0')}
+            {mines.toString().padStart(3, '0')}
           </MinesweeperHeadingNumber>
-          <MinesweeperHeadingButton>
+          <MinesweeperHeadingButton
+            onClick={() => {
+              resetGame(level);
+            }}
+          >
             <span role="img" aria-label="smile">
               🙂
             </span>
@@ -72,7 +84,16 @@ const WindowBody = ({
           </MinesweeperHeadingNumber>
         </MinesweeperHeading>
       </MinesweeperSection>
-      <MinesweeperSection>TODO</MinesweeperSection>
+      <MinesweeperSection>
+        {board.map(row => (
+          <>
+            {row.map(cell => (
+              <span>{cell}</span>
+            ))}
+            <br />
+          </>
+        ))}
+      </MinesweeperSection>
     </StyledMinesweeperBody>
   );
 };

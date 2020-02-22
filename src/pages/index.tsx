@@ -9,9 +9,7 @@ export default function IndexPage(): JSX.Element {
     <Layout>
       <main
         css={css`
-          align-items: center;
           display: flex;
-          justify-content: center;
           min-height: 100%;
         `}
       >

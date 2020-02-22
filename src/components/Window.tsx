@@ -24,54 +24,61 @@ const Window = (): JSX.Element => {
   return (
     <div
       css={css`
-        border: 1px solid;
-        border-color: #f1efe2 #716f64 #716f64 #f1efe2;
+        margin: auto;
+        padding: 16px;
       `}
     >
-      <article
+      <div
         css={css`
           border: 1px solid;
-          border-color: #fff #aca899 #aca899 #fff;
-          background-color: #ece9d8;
-          padding: 1px;
+          border-color: #f1efe2 #716f64 #716f64 #f1efe2;
         `}
       >
-        <header
+        <article
           css={css`
-            align-items: center;
-            background: linear-gradient(to right, #0354e3, #3d95ff);
-            color: white;
-            display: flex;
-            font-weight: 700;
-            height: 25px;
-            padding: 0 4px;
+            border: 1px solid;
+            border-color: #fff #aca899 #aca899 #fff;
+            background-color: #ece9d8;
+            padding: 1px;
           `}
         >
-          <img
-            alt="Mine"
-            src={MinesweeperIcon}
+          <header
             css={css`
-              width: 18px;
-              height: 18px;
-              margin-right: 4px;
+              align-items: center;
+              background: linear-gradient(to right, #0354e3, #3d95ff);
+              color: white;
+              display: flex;
+              font-weight: 700;
+              height: 25px;
+              padding: 0 4px;
             `}
+          >
+            <img
+              alt="Mine"
+              src={MinesweeperIcon}
+              css={css`
+                width: 18px;
+                height: 18px;
+                margin-right: 4px;
+              `}
+            />
+            Minesweeper
+          </header>
+          <WindowMenu
+            level={level}
+            hasMarks={hasMarks}
+            setMarks={setMarks}
+            resetGame={resetGame}
           />
-          Minesweeper
-        </header>
-        <WindowMenu
-          level={level}
-          hasMarks={hasMarks}
-          setMarks={setMarks}
-          resetGame={resetGame}
-        />
-        <WindowBody
-          mines={mines}
-          startMs={startMs}
-          board={board}
-          level={level}
-          resetGame={resetGame}
-        />
-      </article>
+          <WindowBody
+            mines={mines}
+            startMs={startMs}
+            board={board}
+            level={level}
+            resetGame={resetGame}
+          />
+        </article>
+      </div>
     </div>
   );
 };

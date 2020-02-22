@@ -16,8 +16,8 @@ export const BOARD_INFO = {
     mines: 40,
   },
   Expert: {
-    rows: 30,
-    columns: 16,
+    rows: 16,
+    columns: 30,
     mines: 99,
   },
 };

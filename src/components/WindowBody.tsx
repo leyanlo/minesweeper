@@ -16,7 +16,7 @@ const StyledMinesweeperBody = styled.div`
 const MinesweeperSection = styled.section`
   border: 2px solid;
   border-color: #7d7d7d #fff #fff #7d7d7d;
-  &:not(:last-child) {
+  :not(:last-child) {
     margin-bottom: 7px;
   }
 `;
@@ -120,13 +120,15 @@ const WindowBody = ({
                 css={css`
                   width: 16px;
                   height: 16px;
-                  border: 1px solid #7b7b7b;
                   display: flex;
                   align-items: center;
                   justify-content: center;
                   font-family: 'MINE-SWEEPER', sans-serif;
                   font-size: 9px;
                   color: ${getColor(cell)};
+                  border-width: 1px 0 0 1px;
+                  border-style: solid;
+                  border-color: #7b7b7b;
                 `}
               >
                 {cell === -1 ? '*' : !!cell && cell}

@@ -11,11 +11,11 @@ const buttonHighlightCss = css`
 const buttonCss = css`
   border: none;
   padding: 3px 6px;
-  &:focus {
+  :focus {
     outline: none;
   }
-  &:hover,
-  &:focus {
+  :hover,
+  :focus {
     ${buttonHighlightCss};
   }
 `;

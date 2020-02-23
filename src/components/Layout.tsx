@@ -24,17 +24,17 @@ export function Layout({ children }: LayoutProps): JSX.Element {
       src: url(${Digit7MonoWoff2}) format('woff2'),
         url(${Digit7MonoWoff}) format('woff');
     }
-    
+
     @font-face {
       font-family: 'MINE-SWEEPER';
       src: url(${MineSweeperWoff2}) format('woff2'),
         url(${MineSweeperWoff}) format('woff');
     }
-    
+
     html, body, #___gatsby, #gatsby-focus-wrapper {
       height: 100%;
     }
-    
+
     body {
       -webkit-font-smoothing: antialiased;
       background-color: #3A6EA5;

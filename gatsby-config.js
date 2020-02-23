@@ -15,7 +15,7 @@ module.exports = {
         display: 'minimal-ui',
         theme_color: '#BDBDBD',
         background_color: '#3A6EA5',
-        icon: 'src/images/logo.png',
+        icon: 'src/images/minesweeper-icon.png',
         lang: 'en-US',
         start_url: '/',
       },

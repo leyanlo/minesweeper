@@ -25,10 +25,13 @@ const Window = (): JSX.Element => {
 
   const onClickCell = React.useCallback(
     ({ row, column }: { row: number; column: number }) => {
+      if (!startMs) {
+        setStartMs(Date.now());
+      }
       mask[row][column] = Mask.Visible;
       setMask([...mask]);
     },
-    [mask],
+    [mask, startMs],
   );
 
   return (

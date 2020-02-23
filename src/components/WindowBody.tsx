@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
+import React from 'react';
 
 import { Level, Mask } from './utils';
 
@@ -47,6 +48,9 @@ const getColor = (cell: number): string => {
   }
 };
 
+const getTime = (startMs: number | null): number =>
+  startMs ? ~~((Date.now() - startMs) / 1000) : 0;
+
 const WindowBody = ({
   mines,
   startMs,
@@ -64,7 +68,17 @@ const WindowBody = ({
   mask: Mask[][];
   onClickCell: ({ row, column }: { row: number; column: number }) => void;
 }): JSX.Element => {
-  const time = startMs ? (Date.now() - startMs) * 1000 : 0;
+  const [time, setTime] = React.useState<number>(getTime(startMs));
+
+  React.useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTime(getTime(startMs));
+    }, 100);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [startMs]);
+
   return (
     <div
       css={css`

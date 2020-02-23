@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import React from 'react';
 
 import MinesweeperIcon from '../images/minesweeper-icon.png';
-import { BOARD_INFO, createBoard, Level } from './utils';
+import { BOARD_INFO, createBoard, createMask, Level, Mask } from './utils';
 import WindowBody from './WindowBody';
 import WindowMenu from './WindowMenu';
 
@@ -12,14 +12,24 @@ const Window = (): JSX.Element => {
   const [hasMarks, setMarks] = React.useState<boolean>(false);
   const [mines, setMines] = React.useState<number>(BOARD_INFO[level].mines);
   const [board, setBoard] = React.useState<number[][]>(createBoard(level));
+  const [mask, setMask] = React.useState<Mask[][]>(createMask(level));
   const [startMs, setStartMs] = React.useState<number | null>(null);
 
   const resetGame = React.useCallback((l: Level) => {
     setLevel(l);
     setMines(BOARD_INFO[l].mines);
     setBoard(createBoard(l));
+    setMask(createMask(l));
     setStartMs(null);
   }, []);
+
+  const onClickCell = React.useCallback(
+    ({ row, column }: { row: number; column: number }) => {
+      mask[row][column] = Mask.Visible;
+      setMask([...mask]);
+    },
+    [mask],
+  );
 
   return (
     <div
@@ -76,6 +86,8 @@ const Window = (): JSX.Element => {
             board={board}
             level={level}
             resetGame={resetGame}
+            mask={mask}
+            onClickCell={onClickCell}
           />
         </article>
       </div>

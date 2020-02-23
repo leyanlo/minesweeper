@@ -1,9 +1,15 @@
-import styled from '@emotion/styled';
-
 export enum Level {
   Beginner = 'Beginner',
   Intermediate = 'Intermediate',
   Expert = 'Expert',
+}
+
+export enum Mask {
+  Hidden,
+  Visible,
+  Exploded,
+  Flagged,
+  Marked,
 }
 
 export const BOARD_INFO = {
@@ -72,12 +78,7 @@ export const createBoard = (level: Level): number[][] => {
   return board;
 };
 
-export const VisuallyHidden = styled.div`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-`;
+export const createMask = (level: Level): Mask[][] => {
+  const { rows, columns } = BOARD_INFO[level];
+  return [...Array(rows)].map(() => [...Array(columns)].map(() => Mask.Hidden));
+};

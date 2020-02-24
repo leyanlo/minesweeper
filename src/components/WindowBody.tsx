@@ -154,12 +154,11 @@ const WindowBody = ({
                       width: 16px;
                       height: 16px;
                       border: 2px solid;
-                      border-color: #fff #7b7b7b #7b7b7b #fff;
+                      border-color: #fff #808080 #808080 #fff;
                       padding: 0;
                       :active {
                         border-width: 1px 0 0 1px;
-                        border-color: #7b7b7b;
-                        padding-top: 2px;
+                        border-color: #808080;
                         :focus {
                           outline: none;
                         }
@@ -191,7 +190,7 @@ const WindowBody = ({
                     color: ${getColor(cell)};
                     border-width: 1px 0 0 1px;
                     border-style: solid;
-                    border-color: #7b7b7b;
+                    border-color: #808080;
                   `}
                 >
                   {cell === -1 ? '*' : !!cell && cell}

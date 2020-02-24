@@ -58,7 +58,7 @@ const Window = (): JSX.Element => {
           <header
             css={css`
               background: linear-gradient(to right, #0b246a, #a6caf0);
-              color: white;
+              color: #fff;
               display: flex;
               font-weight: 700;
               height: 18px;

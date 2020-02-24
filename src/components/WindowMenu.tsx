@@ -55,7 +55,7 @@ const MenuItem = ({
       :hover,
       :focus {
         background: #0b246a;
-        color: white;
+        color: #fff;
       }
       ${isChecked
         ? `
@@ -81,7 +81,7 @@ const MenuDivider = (): JSX.Element => (
       margin: 3px 1px;
       border-style: solid;
       border-width: 1px 0;
-      border-color: #808080 transparent white;
+      border-color: #808080 transparent #fff;
     `}
     aria-orientation="horizontal"
   />

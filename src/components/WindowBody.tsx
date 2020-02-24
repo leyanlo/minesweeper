@@ -7,16 +7,15 @@ import { Level, Mask } from './utils';
 
 const BodySection = styled.section`
   border: 2px solid;
-  border-color: #7d7d7d #fff #fff #7d7d7d;
+  border-color: #808080 #fff #fff #808080;
   :not(:last-child) {
-    margin-bottom: 7px;
+    margin-bottom: 6px;
   }
 `;
 
 const HeadingNumber = styled.div`
   display: flex;
   align-items: center;
-  box-sizing: border-box;
   height: 25px;
   padding-top: 3px;
   color: #ff0201;
@@ -82,12 +81,11 @@ const WindowBody = ({
   return (
     <div
       css={css`
-        padding: 7px;
-        background-color: #bdbdbd;
-        border-width: 1px;
+        padding: 6px;
+        background-color: #c0c0c0;
+        border-width: 3px 0 0 3px;
         border-style: solid;
-        border-color: #dedede #000 #000 #dedede;
-        box-shadow: inset -1px -1px #7b7b7b, inset 1px 1px white;
+        border-color: #fff;
       `}
     >
       <BodySection>
@@ -96,7 +94,7 @@ const WindowBody = ({
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 3px 5px;
+            padding: 4px 5px;
           `}
         >
           <HeadingNumber>{mines.toString().padStart(3, '0')}</HeadingNumber>
@@ -106,17 +104,17 @@ const WindowBody = ({
               display: flex;
               justify-content: center;
               align-items: center;
-              background-color: #bdbdbd;
-              box-shadow: 0 0 0 1px #7b7b7b;
+              background-color: #c0c0c0;
+              box-shadow: 0 0 0 1px #808080;
               border: 2px solid;
-              border-color: #fff #7b7b7b #7b7b7b #fff;
-              width: 26px;
-              height: 26px;
+              border-color: #fff #808080 #808080 #fff;
+              width: 24px;
+              height: 24px;
               font-size: 14px;
-              padding-top: 1px;
+              padding: 0 0 0 2px;
               :active {
                 border-color: transparent;
-                padding-top: 2px;
+                padding: 1px 0 0 3px;
                 :focus {
                   outline: none;
                 }
@@ -155,8 +153,7 @@ const WindowBody = ({
                     css={css`
                       width: 16px;
                       height: 16px;
-                      border-width: 2px;
-                      border-style: solid;
+                      border: 2px solid;
                       border-color: #fff #7b7b7b #7b7b7b #fff;
                       padding: 0;
                       :active {

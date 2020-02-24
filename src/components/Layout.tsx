@@ -53,8 +53,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
     }
 
     body {
-      -webkit-font-smoothing: antialiased;
-      background-color: #3A6EA5;
+      background-color: #3a6ea5;
       font-family: 'Segoe UI', sans-serif;
       font-size: 11px;
     }

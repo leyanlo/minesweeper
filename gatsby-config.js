@@ -13,8 +13,8 @@ module.exports = {
       options: {
         ...siteMetadata,
         display: 'minimal-ui',
-        theme_color: '#BDBDBD',
-        background_color: '#3A6EA5',
+        theme_color: '#d4d0c8',
+        background_color: '#3a6ea5',
         icon: 'src/images/minesweeper-icon.png',
         lang: 'en-US',
         start_url: '/',

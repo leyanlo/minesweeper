@@ -2,7 +2,7 @@ import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { Level } from './utils';
+import { fadeIn, Level } from './utils';
 
 const menuButtonOpenCss = css`
   border-color: #808080 #fff #fff #808080;
@@ -39,26 +39,26 @@ const MenuItem = ({
 }): JSX.Element => (
   <button
     css={css`
+      display: block;
+      width: 100%;
+      height: 17px;
+      text-align: left;
       border: none;
-      padding: 3px 6px;
+      padding: 0 16px;
       :focus {
         outline: none;
       }
       :hover,
       :focus {
-        background: #316ac5;
+        background: #0b246a;
         color: white;
       }
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 4px 16px;
       ${isChecked
         ? `
               ::before {
                 content: '✓';
                 position: absolute;
-                margin-left: -13px;
+                margin-left: -12px;
               }
             `
         : ``};
@@ -74,10 +74,10 @@ const MenuItem = ({
 const MenuDivider = (): JSX.Element => (
   <hr
     css={css`
-      margin: 5px 1px;
+      margin: 3px 1px;
       border-style: solid;
-      border-width: 1px 0 0 0;
-      border-color: #aca899;
+      border-width: 1px 0;
+      border-color: #808080 transparent white;
     `}
     aria-orientation="horizontal"
   />
@@ -145,49 +145,53 @@ const WindowMenu = ({
             role="menu"
             css={css`
               position: absolute;
-              background-color: white;
-              padding: 2px;
-              border: 1px solid #aca899;
-              min-width: 128px;
+              border: 1px solid;
+              border-color: #d4d0c8 #404040 #404040 #d4d0c8;
+              box-shadow: 8px 8px 4px -4px rgba(0, 0, 0, 0.5);
+              animation: ${fadeIn} 150ms;
             `}
           >
-            <MenuItem
-              onClick={() => {
-                resetGame(level);
-                setOpen(false);
-              }}
+            <div
+              css={css`
+                border: 1px solid;
+                border-color: #fff #808080 #808080 #fff;
+                background-color: #d4d0c8;
+                padding: 1px;
+                min-width: 123px;
+              `}
             >
-              New
-            </MenuItem>
-            <MenuDivider />
-            {[Level.Beginner, Level.Intermediate, Level.Expert].map(l => (
               <MenuItem
-                key={l}
-                onClick={({ currentTarget }) => {
-                  if (l === level) {
-                    // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
-                    currentTarget.blur();
-                    return;
-                  }
-                  resetGame(l);
+                onClick={() => {
+                  resetGame(level);
                   setOpen(false);
                 }}
-                isChecked={l === level}
               >
-                {l}
+                New
               </MenuItem>
-            ))}
-            <MenuDivider />
-            <MenuItem
-              isChecked={hasMarks}
-              onClick={({ currentTarget }) => {
-                setMarks(!hasMarks);
-                // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
-                currentTarget.blur();
-              }}
-            >
-              Marks (?)
-            </MenuItem>
+              <MenuDivider />
+              {[Level.Beginner, Level.Intermediate, Level.Expert].map(l => (
+                <MenuItem
+                  key={l}
+                  onClick={() => {
+                    resetGame(l);
+                    setOpen(false);
+                  }}
+                  isChecked={l === level}
+                >
+                  {l}
+                </MenuItem>
+              ))}
+              <MenuDivider />
+              <MenuItem
+                isChecked={hasMarks}
+                onClick={() => {
+                  setMarks(!hasMarks);
+                  setOpen(false);
+                }}
+              >
+                Marks (?)
+              </MenuItem>
+            </div>
           </div>
         )}
       </li>

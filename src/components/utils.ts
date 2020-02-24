@@ -1,3 +1,5 @@
+import { keyframes } from '@emotion/core';
+
 export enum Level {
   Beginner = 'Beginner',
   Intermediate = 'Intermediate',
@@ -82,3 +84,8 @@ export const createMask = (level: Level): Mask[][] => {
   const { rows, columns } = BOARD_INFO[level];
   return [...Array(rows)].map(() => [...Array(columns)].map(() => Mask.Hidden));
 };
+
+export const fadeIn = keyframes`
+  from { opacity: 0; }
+  to   { opacity: 1; }
+`;

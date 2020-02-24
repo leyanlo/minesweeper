@@ -11,6 +11,10 @@ import Digit7MonoWoff from '../fonts/digit-7-mono.woff';
 import Digit7MonoWoff2 from '../fonts/digit-7-mono.woff2';
 import MineSweeperWoff from '../fonts/mine-sweeper.woff';
 import MineSweeperWoff2 from '../fonts/mine-sweeper.woff2';
+import SegoeUIWoff from '../fonts/SegoeUI.woff';
+import SegoeUIWoff2 from '../fonts/SegoeUI.woff2';
+import SegoeUIBoldWoff from '../fonts/SegoeUIBold.woff';
+import SegoeUIBoldWoff2 from '../fonts/SegoeUIBold.woff2';
 
 export interface LayoutProps {
   children: React.ReactNode;
@@ -31,6 +35,19 @@ export function Layout({ children }: LayoutProps): JSX.Element {
         url(${MineSweeperWoff}) format('woff');
     }
 
+    @font-face {
+      font-family: 'Segoe UI';
+      src: url(${SegoeUIWoff2}) format('woff2'),
+        url(${SegoeUIWoff}) format('woff');
+    }
+
+    @font-face {
+      font-family: 'Segoe UI';
+      src: url(${SegoeUIBoldWoff2}) format('woff2'),
+        url(${SegoeUIBoldWoff}) format('woff');
+      font-weight: 700;
+    }
+
     html, body, #___gatsby, #gatsby-focus-wrapper {
       height: 100%;
     }
@@ -38,8 +55,8 @@ export function Layout({ children }: LayoutProps): JSX.Element {
     body {
       -webkit-font-smoothing: antialiased;
       background-color: #3A6EA5;
-      font-family: Arial, sans-serif;
-      font-size: 12px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 11px;
     }
   `;
 

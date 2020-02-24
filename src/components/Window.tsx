@@ -44,35 +44,34 @@ const Window = (): JSX.Element => {
       <div
         css={css`
           border: 1px solid;
-          border-color: #f1efe2 #716f64 #716f64 #f1efe2;
+          border-color: #d4d0c8 #404040 #404040 #d4d0c8;
         `}
       >
         <article
           css={css`
             border: 1px solid;
-            border-color: #fff #aca899 #aca899 #fff;
-            background-color: #ece9d8;
+            border-color: #fff #808080 #808080 #fff;
+            background-color: #d4d0c8;
             padding: 1px;
           `}
         >
           <header
             css={css`
-              align-items: center;
-              background: linear-gradient(to right, #0354e3, #3d95ff);
+              background: linear-gradient(to right, #0b246a, #a6caf0);
               color: white;
               display: flex;
               font-weight: 700;
-              height: 25px;
-              padding: 0 4px;
+              height: 18px;
+              padding: 1px 2px;
             `}
           >
             <img
               alt="Mine"
               src={MinesweeperIcon}
               css={css`
-                width: 18px;
-                height: 18px;
-                margin-right: 4px;
+                width: 16px;
+                height: 16px;
+                margin-right: 2px;
               `}
             />
             Minesweeper

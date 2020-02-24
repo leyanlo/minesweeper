@@ -111,10 +111,10 @@ const WindowBody = ({
               width: 24px;
               height: 24px;
               font-size: 14px;
-              padding: 0 0 0 2px;
+              padding: 0 0 0 1px;
               :active {
                 border-color: transparent;
-                padding: 1px 0 0 3px;
+                padding: 1px 0 0 2px;
                 :focus {
                   outline: none;
                 }

@@ -92,7 +92,7 @@ const WindowBody = ({
         <div
           css={css`
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: space-between;
             padding: 4px 5px;
           `}

@@ -5,7 +5,11 @@ import React from 'react';
 import { fadeIn, Level } from './utils';
 
 const menuButtonOpenCss = css`
+  padding: 1px 4px 0 6px;
   border-color: #808080 #fff #fff #808080;
+  :hover {
+    border-color: #808080 #fff #fff #808080;
+  }
 `;
 
 const menuButtonClosedCss = css`

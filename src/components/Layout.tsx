@@ -56,6 +56,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
       background-color: #3a6ea5;
       font-family: 'Segoe UI', sans-serif;
       font-size: 11px;
+      overscroll-behavior: none;
     }
   `;
 

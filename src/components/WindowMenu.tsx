@@ -1,23 +1,31 @@
 import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import React from 'react';
 
 import { Level } from './utils';
 
-const buttonHighlightCss = css`
-  background: #316ac5;
-  color: white;
+const menuButtonOpenCss = css`
+  border-color: #808080 #fff #fff #808080;
 `;
 
-const buttonCss = css`
-  border: none;
-  padding: 3px 6px;
+const menuButtonClosedCss = css`
+  :hover {
+    border-color: #fff #808080 #808080 #fff;
+  }
+`;
+
+const MenuButton = styled.button<{ isOpen: boolean }>`
+  border: 1px solid transparent;
+  padding: 0 5px;
+  height: 18px;
   :focus {
     outline: none;
   }
-  :hover,
+  :active,
   :focus {
-    ${buttonHighlightCss};
+    ${menuButtonOpenCss};
   }
+  ${({ isOpen }) => (isOpen ? menuButtonOpenCss : menuButtonClosedCss)};
 `;
 
 const MenuItem = ({
@@ -30,26 +38,31 @@ const MenuItem = ({
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }): JSX.Element => (
   <button
-    css={[
-      css`
-        ${buttonCss};
-        display: block;
-        width: 100%;
-        text-align: left;
-        padding: 4px 16px;
-      `,
-      ...(isChecked
-        ? [
-            css`
+    css={css`
+      border: none;
+      padding: 3px 6px;
+      :focus {
+        outline: none;
+      }
+      :hover,
+      :focus {
+        background: #316ac5;
+        color: white;
+      }
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 4px 16px;
+      ${isChecked
+        ? `
               ::before {
                 content: '✓';
                 position: absolute;
                 margin-left: -13px;
               }
-            `,
-          ]
-        : []),
-    ]}
+            `
+        : ``};
+    `}
     type="button"
     role="menuitem"
     onClick={onClick}
@@ -114,11 +127,11 @@ const WindowMenu = ({
       `}
     >
       <li ref={menuEl}>
-        <button
+        <MenuButton
           type="button"
           aria-haspopup="menu"
           aria-expanded={isOpen}
-          css={[buttonCss, ...(isOpen ? [buttonHighlightCss] : [])]}
+          isOpen={isOpen}
           onClick={({ currentTarget }) => {
             setOpen(!isOpen);
             // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
@@ -126,7 +139,7 @@ const WindowMenu = ({
           }}
         >
           Game
-        </button>
+        </MenuButton>
         {isOpen && (
           <div
             role="menu"

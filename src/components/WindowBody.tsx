@@ -18,7 +18,7 @@ const HeadingNumber = styled.div`
   align-items: center;
   box-sizing: border-box;
   height: 25px;
-  padding-top: 2px;
+  padding-top: 3px;
   color: #ff0201;
   font-size: 30px;
   font-family: 'Digital-7 Mono', sans-serif;

@@ -43,8 +43,16 @@ const getDisplayNumberSrc = (s: string): string => {
 };
 
 const HeadingNumber = ({ number }: { number: number }): JSX.Element => {
-  const clampedNumber = Math.min(999, Math.max(-99, ~~number));
-  const displayString = clampedNumber.toString().padStart(3, '0');
+  let displayString;
+  if (number < 0) {
+    const clampedNumber = Math.max(-99, ~~number);
+    displayString = `-${Math.abs(clampedNumber)
+      .toString()
+      .padStart(2, '0')}`;
+  } else {
+    const clampedNumber = Math.min(999, ~~number);
+    displayString = clampedNumber.toString().padStart(3, '0');
+  }
 
   return (
     <div

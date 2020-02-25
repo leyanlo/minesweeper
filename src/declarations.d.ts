@@ -6,5 +6,6 @@
 
 // And to shim assets, use (one file extension per `declare`):
 declare module '*.png';
+declare module '*.svg';
 declare module '*.woff';
 declare module '*.woff2';

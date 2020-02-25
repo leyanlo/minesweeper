@@ -7,8 +7,6 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-import Digit7MonoWoff from '../fonts/digit-7-mono.woff';
-import Digit7MonoWoff2 from '../fonts/digit-7-mono.woff2';
 import MineSweeperWoff from '../fonts/mine-sweeper.woff';
 import MineSweeperWoff2 from '../fonts/mine-sweeper.woff2';
 import SegoeUIWoff from '../fonts/SegoeUI.woff';
@@ -23,12 +21,6 @@ export interface LayoutProps {
 export function Layout({ children }: LayoutProps): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   injectGlobal`
-    @font-face {
-      font-family: 'Digital-7 Mono';
-      src: url(${Digit7MonoWoff2}) format('woff2'),
-        url(${Digit7MonoWoff}) format('woff');
-    }
-
     @font-face {
       font-family: 'MINE-SWEEPER';
       src: url(${MineSweeperWoff2}) format('woff2'),

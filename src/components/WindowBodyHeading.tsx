@@ -121,7 +121,7 @@ const WindowBodyHeading = ({
           }
           :focus {
             outline: 1px dotted black;
-            outline-offset: -4px;
+            outline-offset: -5px;
           }
         `}
         onClick={({ currentTarget }) => {

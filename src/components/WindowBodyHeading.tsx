@@ -13,7 +13,9 @@ import DisplayDigit6 from '../images/sprites/display-digit-6.svg';
 import DisplayDigit7 from '../images/sprites/display-digit-7.svg';
 import DisplayDigit8 from '../images/sprites/display-digit-8.svg';
 import DisplayDigit9 from '../images/sprites/display-digit-9.svg';
-import { Level } from './utils';
+import FaceActive from '../images/sprites/face-active.svg';
+import Face from '../images/sprites/face.svg';
+import { Level, VisuallyHidden } from './utils';
 
 const getDisplayNumberSrc = (s: string): string => {
   switch (s) {
@@ -106,20 +108,13 @@ const WindowBodyHeading = ({
       <button
         type="button"
         css={css`
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: #c0c0c0;
-          box-shadow: 0 0 0 1px #808080;
-          border: 2px solid;
-          border-color: #fff #808080 #808080 #fff;
-          width: 24px;
-          height: 24px;
-          font-size: 14px;
-          padding: 0 0 0 1px;
+          border: none;
+          padding: 0;
+          width: 26px;
+          height: 26px;
+          background-image: url(${Face});
           :active {
-            border-color: transparent;
-            padding: 1px 0 0 2px;
+            background-image: url(${FaceActive});
             :focus {
               outline: none;
             }
@@ -135,9 +130,7 @@ const WindowBodyHeading = ({
           currentTarget.blur();
         }}
       >
-        <span role="img" aria-label="smile">
-          🙂
-        </span>
+        <VisuallyHidden>New game</VisuallyHidden>
       </button>
       <HeadingNumber number={time} />
     </div>

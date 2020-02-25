@@ -2,26 +2,41 @@
 import { css, jsx } from '@emotion/core';
 import React from 'react';
 
+import Mine0 from '../images/sprites/mine-0.svg';
+import Mine1 from '../images/sprites/mine-1.svg';
+import Mine2 from '../images/sprites/mine-2.svg';
+import Mine3 from '../images/sprites/mine-3.svg';
+import Mine4 from '../images/sprites/mine-4.svg';
+import Mine5 from '../images/sprites/mine-5.svg';
+import Mine6 from '../images/sprites/mine-6.svg';
+import Mine7 from '../images/sprites/mine-7.svg';
+import Mine8 from '../images/sprites/mine-8.svg';
+import MineCovered from '../images/sprites/mine-covered.svg';
+import Mine from '../images/sprites/mine.svg';
 import { Mask } from './utils';
 
-const getColor = (cell: number): string => {
+const getMineUrl = (cell: number): string => {
   switch (cell) {
+    case 0:
+      return Mine0;
     case 1:
-      return '#0700FF';
+      return Mine1;
     case 2:
-      return '#007B01';
+      return Mine2;
     case 3:
-      return '#FE0201';
+      return Mine3;
     case 4:
-      return '#01007B';
+      return Mine4;
     case 5:
-      return '#7B0000';
+      return Mine5;
     case 6:
-      return '#007B7B';
+      return Mine6;
+    case 7:
+      return Mine7;
     case 8:
-      return '#7B7B7B';
+      return Mine8;
     default:
-      return 'black';
+      return Mine;
   }
 };
 
@@ -48,14 +63,13 @@ const WindowBodyBoard = ({
               <button
                 type="button"
                 css={css`
+                  border: none;
+                  padding: 0;
                   width: 16px;
                   height: 16px;
-                  border: 2px solid;
-                  border-color: #fff #808080 #808080 #fff;
-                  padding: 0;
+                  background-image: url(${MineCovered});
                   :active {
-                    border-width: 1px 0 0 1px;
-                    border-color: #808080;
+                    background-image: url(${Mine0});
                     :focus {
                       outline: none;
                     }
@@ -77,21 +91,13 @@ const WindowBodyBoard = ({
           return (
             <div
               css={css`
+                border: none;
+                padding: 0;
                 width: 16px;
                 height: 16px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-family: 'MINE-SWEEPER', sans-serif;
-                font-size: 9px;
-                color: ${getColor(cell)};
-                border-width: 1px 0 0 1px;
-                border-style: solid;
-                border-color: #808080;
+                background-image: url(${getMineUrl(cell)});
               `}
-            >
-              {cell === -1 ? '*' : !!cell && cell}
-            </div>
+            />
           );
         })}
       </div>

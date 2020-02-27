@@ -2,7 +2,8 @@ import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { fadeIn, Level } from './utils';
+import { Action, ActionType, Level, State } from './reducer';
+import { fadeIn } from './styled-components';
 
 const menuButtonOpenCss = css`
   padding: 1px 4px 0 6px;
@@ -88,15 +89,11 @@ const MenuDivider = (): JSX.Element => (
 );
 
 const WindowMenu = ({
-  level,
-  hasMarks,
-  setMarks,
-  resetGame,
+  state,
+  dispatch,
 }: {
-  level: Level;
-  hasMarks: boolean;
-  setMarks: (hasMarks: boolean) => void;
-  resetGame: (level: Level) => void;
+  state: State;
+  dispatch: (action: Action) => void;
 }): JSX.Element => {
   const [isOpen, setOpen] = React.useState<boolean>(false);
 
@@ -166,30 +163,40 @@ const WindowMenu = ({
             >
               <MenuItem
                 onClick={() => {
-                  resetGame(level);
+                  dispatch({
+                    type: ActionType.Init,
+                    level: state.level,
+                    state,
+                  });
                   setOpen(false);
                 }}
               >
                 New
               </MenuItem>
               <MenuDivider />
-              {[Level.Beginner, Level.Intermediate, Level.Expert].map(l => (
+              {[Level.Beginner, Level.Intermediate, Level.Expert].map(level => (
                 <MenuItem
-                  key={l}
+                  key={level}
                   onClick={() => {
-                    resetGame(l);
+                    dispatch({
+                      type: ActionType.Init,
+                      level,
+                      state,
+                    });
                     setOpen(false);
                   }}
-                  isChecked={l === level}
+                  isChecked={level === state.level}
                 >
-                  {l}
+                  {level}
                 </MenuItem>
               ))}
               <MenuDivider />
               <MenuItem
-                isChecked={hasMarks}
+                isChecked={state.hasMarks}
                 onClick={() => {
-                  setMarks(!hasMarks);
+                  dispatch({
+                    type: ActionType.ToggleMarks,
+                  });
                   setOpen(false);
                 }}
               >

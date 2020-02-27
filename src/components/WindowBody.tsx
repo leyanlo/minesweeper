@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
-import { Level, Mask } from './utils';
+import { Action, State } from './reducer';
 import WindowBodyBoard from './WindowBodyBoard';
 import WindowBodyHeading from './WindowBodyHeading';
 
@@ -15,21 +15,11 @@ const BodySection = styled.section`
 `;
 
 const WindowBody = ({
-  mines,
-  startMs,
-  board,
-  level,
-  resetGame,
-  mask,
-  onClickCell,
+  state,
+  dispatch,
 }: {
-  mines: number;
-  startMs: number | null;
-  board: number[][];
-  level: Level;
-  resetGame: (level: Level) => void;
-  mask: Mask[][];
-  onClickCell: ({ row, column }: { row: number; column: number }) => void;
+  state: State;
+  dispatch: (action: Action) => void;
 }): JSX.Element => (
   <div
     css={css`
@@ -41,15 +31,10 @@ const WindowBody = ({
     `}
   >
     <BodySection>
-      <WindowBodyHeading
-        level={level}
-        mines={mines}
-        resetGame={resetGame}
-        startMs={startMs}
-      />
+      <WindowBodyHeading state={state} dispatch={dispatch} />
     </BodySection>
     <BodySection>
-      <WindowBodyBoard board={board} mask={mask} onClickCell={onClickCell} />
+      <WindowBodyBoard state={state} dispatch={dispatch} />
     </BodySection>
   </div>
 );

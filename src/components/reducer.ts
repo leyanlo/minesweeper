@@ -1,6 +1,3 @@
-import { keyframes } from '@emotion/core';
-import styled from '@emotion/styled';
-
 export enum Level {
   Beginner = 'Beginner',
   Intermediate = 'Intermediate',
@@ -13,6 +10,12 @@ export enum Mask {
   Exploded,
   Flagged,
   Marked,
+}
+
+export enum GameState {
+  Playing,
+  Won,
+  Lost,
 }
 
 export const BOARD_INFO = {
@@ -86,17 +89,75 @@ export const createMask = (level: Level): Mask[][] => {
   return [...Array(rows)].map(() => [...Array(columns)].map(() => Mask.Hidden));
 };
 
-export const fadeIn = keyframes`
-  from { opacity: 0; }
-  to   { opacity: 1; }
-`;
+export type State = {
+  level: Level;
+  hasMarks: boolean;
+  mines: number;
+  board: number[][];
+  mask: Mask[][];
+  startMs: number | null;
+  gameState: GameState;
+};
 
-export const VisuallyHidden = styled.div`
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap; /* added line */
-`;
+export const init = (level: Level, state?: State): State => ({
+  level,
+  hasMarks: state?.hasMarks || false,
+  mines: BOARD_INFO[level].mines,
+  board: createBoard(level),
+  mask: createMask(level),
+  startMs: null,
+  gameState: GameState.Playing,
+});
+
+const onClick = ({
+  state,
+  row,
+  column,
+}: {
+  state: State;
+  row: number;
+  column: number;
+}): State => {
+  const newMask = [...state.mask];
+  newMask[row][column] = Mask.Visible;
+  return {
+    ...state,
+    startMs: state.startMs || Date.now(),
+    mask: newMask,
+  };
+};
+
+export enum ActionType {
+  Init,
+  Click,
+  ToggleMarks,
+}
+
+export type Action =
+  | {
+      type: ActionType.Init;
+      level: Level;
+      state: State;
+    }
+  | {
+      type: ActionType.Click;
+      row: number;
+      column: number;
+    }
+  | {
+      type: ActionType.ToggleMarks;
+    };
+
+export const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case ActionType.Init:
+      return init(action.level, state);
+    case ActionType.Click:
+      return onClick({ state, row: action.row, column: action.column });
+    default:
+      return {
+        ...state,
+        hasMarks: !state.hasMarks,
+      };
+  }
+};

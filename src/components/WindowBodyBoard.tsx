@@ -13,7 +13,7 @@ import Mine7 from '../images/sprites/mine-7.svg';
 import Mine8 from '../images/sprites/mine-8.svg';
 import MineCovered from '../images/sprites/mine-covered.svg';
 import Mine from '../images/sprites/mine.svg';
-import { Mask } from './utils';
+import { Action, ActionType, State } from './reducer';
 
 const getMineUrl = (cell: number): string => {
   switch (cell) {
@@ -41,23 +41,21 @@ const getMineUrl = (cell: number): string => {
 };
 
 const WindowBodyBoard = ({
-  board,
-  mask,
-  onClickCell,
+  state,
+  dispatch,
 }: {
-  board: number[][];
-  mask: Mask[][];
-  onClickCell: ({ row, column }: { row: number; column: number }) => void;
+  state: State;
+  dispatch: (action: Action) => void;
 }): JSX.Element => (
   <React.Fragment>
-    {board.map((row, r) => (
+    {state.board.map((row, r) => (
       <div
         css={css`
           display: flex;
         `}
       >
         {row.map((cell, c) => {
-          if (!mask[r][c]) {
+          if (!state.mask[r][c]) {
             return (
               // eslint-disable-next-line jsx-a11y/control-has-associated-label
               <button
@@ -80,7 +78,11 @@ const WindowBodyBoard = ({
                   }
                 `}
                 onClick={({ currentTarget }) => {
-                  onClickCell({ row: r, column: c });
+                  dispatch({
+                    type: ActionType.Click,
+                    row: r,
+                    column: c,
+                  });
                   // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
                   currentTarget.blur();
                 }}

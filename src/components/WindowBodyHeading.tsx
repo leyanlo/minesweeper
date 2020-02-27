@@ -15,7 +15,8 @@ import DisplayDigit8 from '../images/sprites/display-digit-8.svg';
 import DisplayDigit9 from '../images/sprites/display-digit-9.svg';
 import FaceActive from '../images/sprites/face-active.svg';
 import Face from '../images/sprites/face.svg';
-import { Level, VisuallyHidden } from './utils';
+import { Action, ActionType, State } from './reducer';
+import { VisuallyHidden } from './styled-components';
 
 const getDisplayNumberSrc = (s: string): string => {
   switch (s) {
@@ -74,26 +75,22 @@ const getTime = (startMs: number | null): number =>
   startMs ? ~~((Date.now() - startMs) / 1000) : 0;
 
 const WindowBodyHeading = ({
-  level,
-  mines,
-  resetGame,
-  startMs,
+  state,
+  dispatch,
 }: {
-  level: Level;
-  mines: number;
-  resetGame: (level: Level) => void;
-  startMs: number | null;
+  state: State;
+  dispatch: (action: Action) => void;
 }): JSX.Element => {
-  const [time, setTime] = React.useState<number>(getTime(startMs));
+  const [time, setTime] = React.useState<number>(getTime(state.startMs));
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
-      setTime(getTime(startMs));
+      setTime(getTime(state.startMs));
     }, 100);
     return () => {
       clearInterval(intervalId);
     };
-  }, [startMs]);
+  }, [state.startMs]);
 
   return (
     <div
@@ -104,7 +101,7 @@ const WindowBodyHeading = ({
         padding: 4px 5px;
       `}
     >
-      <HeadingNumber number={mines} />
+      <HeadingNumber number={state.mines} />
       <button
         type="button"
         css={css`
@@ -125,7 +122,11 @@ const WindowBodyHeading = ({
           }
         `}
         onClick={({ currentTarget }) => {
-          resetGame(level);
+          dispatch({
+            type: ActionType.Init,
+            level: state.level,
+            state,
+          });
           // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
           currentTarget.blur();
         }}

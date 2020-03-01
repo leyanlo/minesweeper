@@ -50,15 +50,15 @@ const incrementNeighbors = ({
   const rows = board.length;
   const columns = board[0].length;
 
-  for (let r = Math.max(row - 1, 0); r <= Math.min(row + 1, rows - 1); r++) {
+  for (let i = Math.max(row - 1, 0); i <= Math.min(row + 1, rows - 1); i++) {
     for (
-      let c = Math.max(column - 1, 0);
-      c <= Math.min(column + 1, columns - 1);
-      c++
+      let j = Math.max(column - 1, 0);
+      j <= Math.min(column + 1, columns - 1);
+      j++
     ) {
-      if (board[r][c] !== -1) {
+      if (board[i][j] !== -1) {
         // eslint-disable-next-line no-param-reassign
-        board[r][c]++;
+        board[i][j]++;
       }
     }
   }
@@ -69,18 +69,18 @@ const createBoard = (level: Level): number[][] => {
   const board = [...Array(rows)].map(() => [...Array(columns)].map(() => 0));
 
   for (let i = 0; i < mines; i++) {
-    let r;
-    let c;
+    let i;
+    let j;
     do {
-      r = ~~(Math.random() * rows);
-      c = ~~(Math.random() * columns);
-    } while (board[r][c] === -1);
-    board[r][c] = -1;
+      i = ~~(Math.random() * rows);
+      j = ~~(Math.random() * columns);
+    } while (board[i][j] === -1);
+    board[i][j] = -1;
 
     incrementNeighbors({
       board,
-      row: r,
-      column: c,
+      row: i,
+      column: j,
     });
   }
   return board;

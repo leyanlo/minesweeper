@@ -46,14 +46,14 @@ const WindowBodyBoard = (): JSX.Element => {
 
   return (
     <React.Fragment>
-      {state.board.map((row, r) => (
+      {state.board.map((row, i) => (
         <div
           css={css`
             display: flex;
           `}
         >
-          {row.map((cell, c) => {
-            if (state.mask[r][c] === Mask.Hidden) {
+          {row.map((cell, j) => {
+            if (state.mask[i][j] === Mask.Hidden) {
               return (
                 // eslint-disable-next-line jsx-a11y/control-has-associated-label
                 <button
@@ -79,8 +79,8 @@ const WindowBodyBoard = (): JSX.Element => {
                   onClick={({ currentTarget }) => {
                     dispatch({
                       type: ActionType.Click,
-                      row: r,
-                      column: c,
+                      row: i,
+                      column: j,
                     });
                     // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
                     currentTarget.blur();
@@ -94,7 +94,7 @@ const WindowBodyBoard = (): JSX.Element => {
                 css={css`
                   width: 16px;
                   height: 16px;
-                  background-image: url(${state.mask[r][c] === Mask.Exploded
+                  background-image: url(${state.mask[i][j] === Mask.Exploded
                     ? MineExploded
                     : getMineUrl(cell)});
                 `}

@@ -1,16 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import React from 'react';
 
 import MinesweeperIcon from '../images/minesweeper-icon.png';
-import { init, Level, reducer } from './reducer';
+import Game from './Game';
 import WindowBody from './WindowBody';
 import WindowMenu from './WindowMenu';
 
-const Window = (): JSX.Element => {
-  const [state, dispatch] = React.useReducer(reducer, Level.Beginner, init);
-
-  return (
+const Window = (): JSX.Element => (
+  <Game>
     <div
       css={css`
         margin: auto;
@@ -52,12 +49,12 @@ const Window = (): JSX.Element => {
             />
             Minesweeper
           </header>
-          <WindowMenu state={state} dispatch={dispatch} />
-          <WindowBody state={state} dispatch={dispatch} />
+          <WindowMenu />
+          <WindowBody />
         </article>
       </div>
     </div>
-  );
-};
+  </Game>
+);
 
 export default Window;

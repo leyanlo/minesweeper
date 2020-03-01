@@ -15,7 +15,7 @@ import DisplayDigit8 from '../images/sprites/display-digit-8.svg';
 import DisplayDigit9 from '../images/sprites/display-digit-9.svg';
 import FaceActive from '../images/sprites/face-active.svg';
 import Face from '../images/sprites/face.svg';
-import { Action, ActionType, State } from './reducer';
+import { ActionType, GameContext } from './Game';
 import { VisuallyHidden } from './styled-components';
 
 const getDisplayNumberSrc = (s: string): string => {
@@ -74,13 +74,8 @@ const HeadingNumber = ({ number }: { number: number }): JSX.Element => {
 const getTime = (startMs: number | null): number =>
   startMs ? ~~((Date.now() - startMs) / 1000) : 0;
 
-const WindowBodyHeading = ({
-  state,
-  dispatch,
-}: {
-  state: State;
-  dispatch: (action: Action) => void;
-}): JSX.Element => {
+const WindowBodyHeading = (): JSX.Element => {
+  const { state, dispatch } = React.useContext(GameContext);
   const [time, setTime] = React.useState<number>(getTime(state.startMs));
 
   React.useEffect(() => {

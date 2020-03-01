@@ -1,10 +1,12 @@
+import React from 'react';
+
 export enum Level {
   Beginner = 'Beginner',
   Intermediate = 'Intermediate',
   Expert = 'Expert',
 }
 
-export enum Mask {
+enum Mask {
   Hidden,
   Visible,
   Exploded,
@@ -12,13 +14,13 @@ export enum Mask {
   Marked,
 }
 
-export enum GameState {
+enum GameState {
   Playing,
   Won,
   Lost,
 }
 
-export const BOARD_INFO = {
+const BOARD_INFO = {
   Beginner: {
     rows: 8,
     columns: 8,
@@ -62,7 +64,7 @@ const incrementNeighbors = ({
   }
 };
 
-export const createBoard = (level: Level): number[][] => {
+const createBoard = (level: Level): number[][] => {
   const { rows, columns, mines } = BOARD_INFO[level];
   const board = [...Array(rows)].map(() => [...Array(columns)].map(() => 0));
 
@@ -84,12 +86,12 @@ export const createBoard = (level: Level): number[][] => {
   return board;
 };
 
-export const createMask = (level: Level): Mask[][] => {
+const createMask = (level: Level): Mask[][] => {
   const { rows, columns } = BOARD_INFO[level];
   return [...Array(rows)].map(() => [...Array(columns)].map(() => Mask.Hidden));
 };
 
-export type State = {
+type State = {
   level: Level;
   hasMarks: boolean;
   mines: number;
@@ -99,7 +101,7 @@ export type State = {
   gameState: GameState;
 };
 
-export const init = (level: Level, state?: State): State => ({
+const init = (level: Level, state?: State): State => ({
   level,
   hasMarks: state?.hasMarks || false,
   mines: BOARD_INFO[level].mines,
@@ -133,7 +135,7 @@ export enum ActionType {
   ToggleMarks,
 }
 
-export type Action =
+type Action =
   | {
       type: ActionType.Init;
       level: Level;
@@ -148,7 +150,7 @@ export type Action =
       type: ActionType.ToggleMarks;
     };
 
-export const reducer = (state: State, action: Action): State => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.Init:
       return init(action.level, state);
@@ -161,3 +163,20 @@ export const reducer = (state: State, action: Action): State => {
       };
   }
 };
+
+export const GameContext = React.createContext({
+  state: init(Level.Beginner),
+  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+  dispatch: (action: Action) => {},
+});
+
+const Game = ({ children }: { children: React.ReactNode }): JSX.Element => {
+  const [state, dispatch] = React.useReducer(reducer, Level.Beginner, init);
+  return (
+    <GameContext.Provider value={{ state, dispatch }}>
+      {children}
+    </GameContext.Provider>
+  );
+};
+
+export default Game;

@@ -2,7 +2,6 @@
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
-import { Action, State } from './reducer';
 import WindowBodyBoard from './WindowBodyBoard';
 import WindowBodyHeading from './WindowBodyHeading';
 
@@ -14,13 +13,7 @@ const BodySection = styled.section`
   }
 `;
 
-const WindowBody = ({
-  state,
-  dispatch,
-}: {
-  state: State;
-  dispatch: (action: Action) => void;
-}): JSX.Element => (
+const WindowBody = (): JSX.Element => (
   <div
     css={css`
       padding: 6px;
@@ -31,10 +24,10 @@ const WindowBody = ({
     `}
   >
     <BodySection>
-      <WindowBodyHeading state={state} dispatch={dispatch} />
+      <WindowBodyHeading />
     </BodySection>
     <BodySection>
-      <WindowBodyBoard state={state} dispatch={dispatch} />
+      <WindowBodyBoard />
     </BodySection>
   </div>
 );

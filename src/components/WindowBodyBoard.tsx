@@ -13,7 +13,7 @@ import Mine7 from '../images/sprites/mine-7.svg';
 import Mine8 from '../images/sprites/mine-8.svg';
 import MineCovered from '../images/sprites/mine-covered.svg';
 import Mine from '../images/sprites/mine.svg';
-import { Action, ActionType, State } from './reducer';
+import { ActionType, GameContext } from './Game';
 
 const getMineUrl = (cell: number): string => {
   switch (cell) {
@@ -40,71 +40,69 @@ const getMineUrl = (cell: number): string => {
   }
 };
 
-const WindowBodyBoard = ({
-  state,
-  dispatch,
-}: {
-  state: State;
-  dispatch: (action: Action) => void;
-}): JSX.Element => (
-  <React.Fragment>
-    {state.board.map((row, r) => (
-      <div
-        css={css`
-          display: flex;
-        `}
-      >
-        {row.map((cell, c) => {
-          if (!state.mask[r][c]) {
+const WindowBodyBoard = (): JSX.Element => {
+  const { state, dispatch } = React.useContext(GameContext);
+
+  return (
+    <React.Fragment>
+      {state.board.map((row, r) => (
+        <div
+          css={css`
+            display: flex;
+          `}
+        >
+          {row.map((cell, c) => {
+            if (!state.mask[r][c]) {
+              return (
+                // eslint-disable-next-line jsx-a11y/control-has-associated-label
+                <button
+                  type="button"
+                  css={css`
+                    border: none;
+                    padding: 0;
+                    width: 16px;
+                    height: 16px;
+                    background-image: url(${MineCovered});
+                    :active {
+                      background-image: url(${Mine0});
+                      :focus {
+                        outline: none;
+                      }
+                    }
+                    :focus {
+                      outline: 1px dotted black;
+                      outline-offset: -4px;
+                    }
+                  `}
+                  onClick={({ currentTarget }) => {
+                    dispatch({
+                      type: ActionType.Click,
+                      row: r,
+                      column: c,
+                    });
+                    // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
+                    currentTarget.blur();
+                  }}
+                />
+              );
+            }
+
             return (
-              // eslint-disable-next-line jsx-a11y/control-has-associated-label
-              <button
-                type="button"
+              <div
                 css={css`
                   border: none;
                   padding: 0;
                   width: 16px;
                   height: 16px;
-                  background-image: url(${MineCovered});
-                  :active {
-                    background-image: url(${Mine0});
-                    :focus {
-                      outline: none;
-                    }
-                  }
-                  :focus {
-                    outline: 1px dotted black;
-                    outline-offset: -4px;
-                  }
+                  background-image: url(${getMineUrl(cell)});
                 `}
-                onClick={({ currentTarget }) => {
-                  dispatch({
-                    type: ActionType.Click,
-                    row: r,
-                    column: c,
-                  });
-                  // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
-                  currentTarget.blur();
-                }}
               />
             );
-          }
-
-          return (
-            <div
-              css={css`
-                border: none;
-                padding: 0;
-                width: 16px;
-                height: 16px;
-                background-image: url(${getMineUrl(cell)});
-              `}
-            />
-          );
-        })}
-      </div>
-    ))}
-  </React.Fragment>
-);
+          })}
+        </div>
+      ))}
+    </React.Fragment>
+  );
+};
 
 export default WindowBodyBoard;

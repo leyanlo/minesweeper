@@ -2,7 +2,7 @@ import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { Action, ActionType, Level, State } from './reducer';
+import { ActionType, GameContext, Level } from './Game';
 import { fadeIn } from './styled-components';
 
 const menuButtonOpenCss = css`
@@ -88,13 +88,8 @@ const MenuDivider = (): JSX.Element => (
   />
 );
 
-const WindowMenu = ({
-  state,
-  dispatch,
-}: {
-  state: State;
-  dispatch: (action: Action) => void;
-}): JSX.Element => {
+const WindowMenu = (): JSX.Element => {
+  const { state, dispatch } = React.useContext(GameContext);
   const [isOpen, setOpen] = React.useState<boolean>(false);
 
   const menuEl = React.useRef<HTMLLIElement>(null);

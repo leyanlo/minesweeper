@@ -48,6 +48,7 @@ const WindowBodyBoard = (): JSX.Element => {
     <React.Fragment>
       {state.board.map((row, i) => (
         <div
+          key={i}
           css={css`
             display: flex;
           `}
@@ -57,6 +58,7 @@ const WindowBodyBoard = (): JSX.Element => {
               return (
                 // eslint-disable-next-line jsx-a11y/control-has-associated-label
                 <button
+                  key={`${i},${j}`}
                   type="button"
                   disabled={state.gameState !== GameState.Playing}
                   css={css`
@@ -91,6 +93,7 @@ const WindowBodyBoard = (): JSX.Element => {
 
             return (
               <div
+                key={`${i},${j}`}
                 css={css`
                   width: 16px;
                   height: 16px;

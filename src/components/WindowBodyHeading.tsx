@@ -14,8 +14,10 @@ import DisplayDigit7 from '../images/sprites/display-digit-7.svg';
 import DisplayDigit8 from '../images/sprites/display-digit-8.svg';
 import DisplayDigit9 from '../images/sprites/display-digit-9.svg';
 import FaceActive from '../images/sprites/face-active.svg';
+import FaceLost from '../images/sprites/face-lost.svg';
+import FaceWon from '../images/sprites/face-won.svg';
 import Face from '../images/sprites/face.svg';
-import { ActionType, GameContext } from './Game';
+import { ActionType, GameContext, GameState } from './Game';
 import { VisuallyHidden } from './styled-components';
 
 const getDisplayNumberSrc = (s: string): string => {
@@ -71,21 +73,36 @@ const HeadingNumber = ({ number }: { number: number }): JSX.Element => {
   );
 };
 
-const getTime = (startMs: number | null): number =>
-  startMs ? ~~((Date.now() - startMs) / 1000) : 0;
+const getTime = ({
+  startMs,
+  endMs,
+}: {
+  startMs: number | null;
+  endMs: number | null;
+}): number =>
+  !startMs
+    ? 0
+    : !endMs
+    ? ~~((Date.now() - startMs) / 1000)
+    : ~~((endMs - startMs) / 1000);
 
 const WindowBodyHeading = (): JSX.Element => {
   const { state, dispatch } = React.useContext(GameContext);
-  const [time, setTime] = React.useState<number>(getTime(state.startMs));
+  const [time, setTime] = React.useState<number>(0);
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
-      setTime(getTime(state.startMs));
+      setTime(
+        getTime({
+          startMs: state.startMs,
+          endMs: state.endMs,
+        }),
+      );
     }, 100);
     return () => {
       clearInterval(intervalId);
     };
-  }, [state.startMs]);
+  }, [state.startMs, state.endMs]);
 
   return (
     <div
@@ -104,7 +121,11 @@ const WindowBodyHeading = (): JSX.Element => {
           padding: 0;
           width: 26px;
           height: 26px;
-          background-image: url(${Face});
+          background-image: url(${{
+            [GameState.Playing]: Face,
+            [GameState.Won]: FaceWon,
+            [GameState.Lost]: FaceLost,
+          }[state.gameState]});
           :active {
             background-image: url(${FaceActive});
             :focus {

@@ -12,8 +12,9 @@ import Mine6 from '../images/sprites/mine-6.svg';
 import Mine7 from '../images/sprites/mine-7.svg';
 import Mine8 from '../images/sprites/mine-8.svg';
 import MineCovered from '../images/sprites/mine-covered.svg';
+import MineExploded from '../images/sprites/mine-exploded.svg';
 import Mine from '../images/sprites/mine.svg';
-import { ActionType, GameContext } from './Game';
+import { ActionType, GameContext, GameState, Mask } from './Game';
 
 const getMineUrl = (cell: number): string => {
   switch (cell) {
@@ -52,11 +53,12 @@ const WindowBodyBoard = (): JSX.Element => {
           `}
         >
           {row.map((cell, c) => {
-            if (!state.mask[r][c]) {
+            if (state.mask[r][c] === Mask.Hidden) {
               return (
                 // eslint-disable-next-line jsx-a11y/control-has-associated-label
                 <button
                   type="button"
+                  disabled={state.gameState !== GameState.Playing}
                   css={css`
                     border: none;
                     padding: 0;
@@ -90,11 +92,11 @@ const WindowBodyBoard = (): JSX.Element => {
             return (
               <div
                 css={css`
-                  border: none;
-                  padding: 0;
                   width: 16px;
                   height: 16px;
-                  background-image: url(${getMineUrl(cell)});
+                  background-image: url(${state.mask[r][c] === Mask.Exploded
+                    ? MineExploded
+                    : getMineUrl(cell)});
                 `}
               />
             );

@@ -6,7 +6,7 @@ export enum Level {
   Expert = 'Expert',
 }
 
-enum Mask {
+export enum Mask {
   Hidden,
   Visible,
   Exploded,
@@ -14,7 +14,7 @@ enum Mask {
   Marked,
 }
 
-enum GameState {
+export enum GameState {
   Playing,
   Won,
   Lost,
@@ -98,6 +98,7 @@ type State = {
   board: number[][];
   mask: Mask[][];
   startMs: number | null;
+  endMs: number | null;
   gameState: GameState;
 };
 
@@ -108,7 +109,48 @@ const init = (level: Level, state?: State): State => ({
   board: createBoard(level),
   mask: createMask(level),
   startMs: null,
+  endMs: null,
   gameState: GameState.Playing,
+});
+
+const onClickMine = ({
+  state,
+  row,
+  column,
+}: {
+  state: State;
+  row: number;
+  column: number;
+}): State => ({
+  ...state,
+  mask: state.mask.map((r, i) =>
+    r.map((c, j) =>
+      state.board[i][j] !== -1
+        ? c
+        : i === row && j === column
+        ? Mask.Exploded
+        : Mask.Visible,
+    ),
+  ),
+  startMs: state.startMs || Date.now(),
+  endMs: Date.now(),
+  gameState: GameState.Lost,
+});
+
+const onClickNumber = ({
+  state,
+  row,
+  column,
+}: {
+  state: State;
+  row: number;
+  column: number;
+}): State => ({
+  ...state,
+  mask: state.mask.map((r, i) =>
+    r.map((c, j) => (i === row && j === column ? Mask.Visible : c)),
+  ),
+  startMs: state.startMs || Date.now(),
 });
 
 const onClick = ({
@@ -120,13 +162,15 @@ const onClick = ({
   row: number;
   column: number;
 }): State => {
-  const newMask = [...state.mask];
-  newMask[row][column] = Mask.Visible;
-  return {
-    ...state,
-    startMs: state.startMs || Date.now(),
-    mask: newMask,
-  };
+  switch (state.board[row][column]) {
+    case -1:
+      return onClickMine({ state, row, column });
+    case 0:
+    // TODO: handle empty cell
+    // eslint-disable-next-line no-fallthrough
+    default:
+      return onClickNumber({ state, row, column });
+  }
 };
 
 export enum ActionType {

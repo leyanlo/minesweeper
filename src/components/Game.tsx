@@ -137,7 +137,7 @@ const onClickMine = ({
   gameState: GameState.Lost,
 });
 
-const onClickEmptyCell = ({
+const onClickNumber = ({
   state,
   row,
   column,
@@ -147,19 +147,19 @@ const onClickEmptyCell = ({
   column: number;
 }): State => {
   const checks = [[row, column]];
-  const newMask = [...state.mask];
+  const nextMask = [...state.mask];
   for (let check = checks.pop(); check; check = checks.pop()) {
     const [i, j] = check;
     if (
       i < 0 ||
-      i >= newMask.length ||
+      i >= nextMask.length ||
       j < 0 ||
-      j >= newMask[0].length ||
-      newMask[i][j] === Mask.Visible
+      j >= nextMask[0].length ||
+      nextMask[i][j] === Mask.Visible
     ) {
       continue;
     }
-    newMask[i][j] = Mask.Visible;
+    nextMask[i][j] = Mask.Visible;
     if (!state.board[i][j]) {
       checks.push(
         [i - 1, j],
@@ -173,28 +173,24 @@ const onClickEmptyCell = ({
       );
     }
   }
+
+  // win if every non-mine cell is visible
+  const hasWon = nextMask.every((r, i) =>
+    r.every((c, j) => state.board[i][j] === -1 || c !== Mask.Hidden),
+  );
+
   return {
     ...state,
-    mask: newMask,
+    mask: nextMask,
     startMs: state.startMs || Date.now(),
+    ...(hasWon
+      ? {
+          endMs: Date.now(),
+          gameState: GameState.Won,
+        }
+      : {}),
   };
 };
-
-const onClickNumber = ({
-  state,
-  row,
-  column,
-}: {
-  state: State;
-  row: number;
-  column: number;
-}): State => ({
-  ...state,
-  mask: state.mask.map((r, i) =>
-    r.map((c, j) => (i === row && j === column ? Mask.Visible : c)),
-  ),
-  startMs: state.startMs || Date.now(),
-});
 
 const onClick = ({
   state,
@@ -204,16 +200,14 @@ const onClick = ({
   state: State;
   row: number;
   column: number;
-}): State => {
-  switch (state.board[row][column]) {
-    case -1:
-      return onClickMine({ state, row, column });
-    case 0:
-      return onClickEmptyCell({ state, row, column });
-    default:
-      return onClickNumber({ state, row, column });
-  }
-};
+}): State =>
+  state.board[row][column] === -1
+    ? onClickMine({
+        state,
+        row,
+        column,
+      })
+    : onClickNumber({ state, row, column });
 
 export enum ActionType {
   Init,

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import React from 'react';
+import LongPress from 'react-long/es';
 
 import Mine0 from '../images/sprites/mine-0.svg';
 import Mine1 from '../images/sprites/mine-1.svg';
@@ -59,66 +60,93 @@ const WindowBodyBoard = (): JSX.Element => {
             switch (state.mask[i][j]) {
               case Mask.Hidden:
                 return (
-                  <button
-                    key={`${i},${j}`}
-                    type="button"
-                    disabled={state.gameState !== GameState.Playing}
-                    css={css`
-                      border: none;
-                      padding: 0;
-                      width: 16px;
-                      height: 16px;
-                      background-image: url(${MineCovered});
-                      :active {
-                        background-image: url(${Mine0});
-                        :focus {
-                          outline: none;
-                        }
-                      }
-                      :focus {
-                        outline: 1px dotted black;
-                        outline-offset: -4px;
-                      }
-                    `}
-                    onContextMenu={event => {
-                      event.preventDefault();
+                  <LongPress
+                    onLongPress={() => {
                       dispatch({
                         type: ActionType.Flag,
                         row: i,
                         column: j,
                       });
                     }}
-                    onClick={({ currentTarget }) => {
+                    onPress={() => {
                       dispatch({
                         type: ActionType.Click,
                         row: i,
                         column: j,
                       });
-                      // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
-                      currentTarget.blur();
                     }}
                   >
-                    <VisuallyHidden>Uncover cell</VisuallyHidden>
-                  </button>
+                    <button
+                      key={`${i},${j}`}
+                      type="button"
+                      disabled={state.gameState !== GameState.Playing}
+                      css={css`
+                        border: none;
+                        padding: 0;
+                        width: 16px;
+                        height: 16px;
+                        background-image: url(${MineCovered});
+                        :active {
+                          background-image: url(${Mine0});
+                          :focus {
+                            outline: none;
+                          }
+                        }
+                        :focus {
+                          outline: 1px dotted black;
+                          outline-offset: -4px;
+                        }
+                      `}
+                      onContextMenu={event => {
+                        event.preventDefault();
+                        dispatch({
+                          type: ActionType.Flag,
+                          row: i,
+                          column: j,
+                        });
+                      }}
+                      onClick={({ currentTarget }) => {
+                        dispatch({
+                          type: ActionType.Click,
+                          row: i,
+                          column: j,
+                        });
+                        // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
+                        currentTarget.blur();
+                      }}
+                    >
+                      <VisuallyHidden>Uncover cell</VisuallyHidden>
+                    </button>
+                  </LongPress>
                 );
               case Mask.Flagged:
                 return (
-                  <div
-                    key={`${i},${j}`}
-                    css={css`
-                      width: 16px;
-                      height: 16px;
-                      background-image: url(${MineFlagged});
-                    `}
-                    onContextMenu={event => {
-                      event.preventDefault();
+                  <LongPress
+                    onLongPress={() => {
                       dispatch({
                         type: ActionType.Flag,
                         row: i,
                         column: j,
                       });
                     }}
-                  />
+                  >
+                    <div
+                      key={`${i},${j}`}
+                      css={css`
+                        width: 16px;
+                        height: 16px;
+                        background-image: url(${MineFlagged});
+                      `}
+                      onContextMenu={event => {
+                        event.preventDefault();
+                        dispatch({
+                          type: ActionType.Flag,
+                          row: i,
+                          column: j,
+                        });
+                      }}
+                    />
+                  </LongPress>
                 );
               default:
                 return (

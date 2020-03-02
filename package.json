@@ -35,6 +35,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.0.0-beta.2",
+    "react-long": "^1.1.9",
     "sanitize.css": "^11.0.0",
     "typescript": "^3.7.5"
   },

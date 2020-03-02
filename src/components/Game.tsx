@@ -132,7 +132,6 @@ const onClickMine = ({
         : Mask.Visible,
     ),
   ),
-  startMs: state.startMs || Date.now(),
   endMs: Date.now(),
   gameState: GameState.Lost,
 });
@@ -201,13 +200,23 @@ const onClick = ({
   row: number;
   column: number;
 }): State =>
-  state.board[row][column] === -1
+  state.board[row][column] !== -1
+    ? onClickNumber({
+        state,
+        row,
+        column,
+      })
+    : state.startMs
     ? onClickMine({
         state,
         row,
         column,
       })
-    : onClickNumber({ state, row, column });
+    : onClick({
+        state: init(state.level, state),
+        row,
+        column,
+      });
 
 export enum ActionType {
   Init,

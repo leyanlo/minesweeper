@@ -16,7 +16,7 @@ import MineCovered from '../images/sprites/mine-covered.svg';
 import MineExploded from '../images/sprites/mine-exploded.svg';
 import MineFlagged from '../images/sprites/mine-flagged.svg';
 import Mine from '../images/sprites/mine.svg';
-import { ActionType, GameContext, GameState, Mask } from './Game';
+import { Action, ActionType, GameContext, GameState, Mask } from './Game';
 import { VisuallyHidden } from './styled-components';
 
 const getMineUrl = (cell: number): string => {
@@ -57,23 +57,26 @@ const WindowBodyBoard = (): JSX.Element => {
           `}
         >
           {row.map((cell, j) => {
+            const clickAction: Action = {
+              type: ActionType.Click,
+              row: i,
+              column: j,
+            };
+            const flagAction: Action = {
+              type: ActionType.Flag,
+              row: i,
+              column: j,
+            };
+
             switch (state.mask[i][j]) {
               case Mask.Hidden:
                 return (
                   <LongPress
                     onLongPress={() => {
-                      dispatch({
-                        type: ActionType.Flag,
-                        row: i,
-                        column: j,
-                      });
+                      dispatch(flagAction);
                     }}
                     onPress={() => {
-                      dispatch({
-                        type: ActionType.Click,
-                        row: i,
-                        column: j,
-                      });
+                      dispatch(clickAction);
                     }}
                   >
                     <button
@@ -99,18 +102,10 @@ const WindowBodyBoard = (): JSX.Element => {
                       `}
                       onContextMenu={event => {
                         event.preventDefault();
-                        dispatch({
-                          type: ActionType.Flag,
-                          row: i,
-                          column: j,
-                        });
+                        dispatch(flagAction);
                       }}
                       onClick={({ currentTarget }) => {
-                        dispatch({
-                          type: ActionType.Click,
-                          row: i,
-                          column: j,
-                        });
+                        dispatch(clickAction);
                         // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
                         currentTarget.blur();
                       }}
@@ -123,11 +118,7 @@ const WindowBodyBoard = (): JSX.Element => {
                 return (
                   <LongPress
                     onLongPress={() => {
-                      dispatch({
-                        type: ActionType.Flag,
-                        row: i,
-                        column: j,
-                      });
+                      dispatch(flagAction);
                     }}
                   >
                     <div
@@ -139,11 +130,7 @@ const WindowBodyBoard = (): JSX.Element => {
                       `}
                       onContextMenu={event => {
                         event.preventDefault();
-                        dispatch({
-                          type: ActionType.Flag,
-                          row: i,
-                          column: j,
-                        });
+                        dispatch(flagAction);
                       }}
                     />
                   </LongPress>

@@ -253,7 +253,7 @@ export enum ActionType {
   Flag,
 }
 
-type Action =
+export type Action =
   | {
       type: ActionType.Init;
       level: Level;

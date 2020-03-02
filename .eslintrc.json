@@ -30,6 +30,7 @@
     "simple-import-sort/sort": "error",
     "arrow-body-style": ["error"],
     "no-bitwise": "off",
+    "no-continue": "off",
     "no-nested-ternary": "off",
     "no-plusplus": "off",
     "no-unused-expressions": ["error", { "allowTaggedTemplates": true }],

@@ -68,7 +68,7 @@ const createBoard = (level: Level): number[][] => {
   const { rows, columns, mines } = BOARD_INFO[level];
   const board = [...Array(rows)].map(() => [...Array(columns)].map(() => 0));
 
-  for (let i = 0; i < mines; i++) {
+  [...Array(mines)].forEach(() => {
     let i;
     let j;
     do {
@@ -82,7 +82,7 @@ const createBoard = (level: Level): number[][] => {
       row: i,
       column: j,
     });
-  }
+  });
   return board;
 };
 
@@ -137,6 +137,49 @@ const onClickMine = ({
   gameState: GameState.Lost,
 });
 
+const onClickEmptyCell = ({
+  state,
+  row,
+  column,
+}: {
+  state: State;
+  row: number;
+  column: number;
+}): State => {
+  const checks = [[row, column]];
+  const newMask = [...state.mask];
+  for (let check = checks.pop(); check; check = checks.pop()) {
+    const [i, j] = check;
+    if (
+      i < 0 ||
+      i >= newMask.length ||
+      j < 0 ||
+      j >= newMask[0].length ||
+      newMask[i][j] === Mask.Visible
+    ) {
+      continue;
+    }
+    newMask[i][j] = Mask.Visible;
+    if (!state.board[i][j]) {
+      checks.push(
+        [i - 1, j],
+        [i - 1, j + 1],
+        [i, j + 1],
+        [i + 1, j + 1],
+        [i + 1, j],
+        [i + 1, j - 1],
+        [i, j - 1],
+        [i - 1, j - 1],
+      );
+    }
+  }
+  return {
+    ...state,
+    mask: newMask,
+    startMs: state.startMs || Date.now(),
+  };
+};
+
 const onClickNumber = ({
   state,
   row,
@@ -166,8 +209,7 @@ const onClick = ({
     case -1:
       return onClickMine({ state, row, column });
     case 0:
-    // TODO: handle empty cell
-    // eslint-disable-next-line no-fallthrough
+      return onClickEmptyCell({ state, row, column });
     default:
       return onClickNumber({ state, row, column });
   }

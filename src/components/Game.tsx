@@ -180,14 +180,16 @@ const onClickNumber = ({
 
   return {
     ...state,
-    mask: nextMask,
     startMs: state.startMs || Date.now(),
     ...(hasWon
       ? {
+          mask: nextMask.map((r, i) =>
+            r.map((c, j) => (state.board[i][j] !== -1 ? c : Mask.Flagged)),
+          ),
           endMs: Date.now(),
           gameState: GameState.Won,
         }
-      : {}),
+      : { mask: nextMask }),
   };
 };
 
@@ -218,10 +220,37 @@ const onClick = ({
         column,
       });
 
+const onFlag = ({
+  state,
+  row,
+  column,
+}: {
+  state: State;
+  row: number;
+  column: number;
+}): State => {
+  // do nothing if not playing
+  if (state.gameState !== GameState.Playing) {
+    return state;
+  }
+
+  const isFlagged = state.mask[row][column] === Mask.Flagged;
+  return {
+    ...state,
+    mines: isFlagged ? state.mines + 1 : state.mines - 1,
+    mask: state.mask.map((r, i) =>
+      r.map((c, j) =>
+        i !== row || j !== column ? c : isFlagged ? Mask.Hidden : Mask.Flagged,
+      ),
+    ),
+  };
+};
+
 export enum ActionType {
   Init,
   Click,
   ToggleMarks,
+  Flag,
 }
 
 type Action =
@@ -236,6 +265,11 @@ type Action =
       column: number;
     }
   | {
+      type: ActionType.Flag;
+      row: number;
+      column: number;
+    }
+  | {
       type: ActionType.ToggleMarks;
     };
 
@@ -245,11 +279,16 @@ const reducer = (state: State, action: Action): State => {
       return init(action.level, state);
     case ActionType.Click:
       return onClick({ state, row: action.row, column: action.column });
-    default:
+    case ActionType.Flag:
+      return onFlag({ state, row: action.row, column: action.column });
+    case ActionType.ToggleMarks:
       return {
         ...state,
         hasMarks: !state.hasMarks,
       };
+    default:
+      // should not happen
+      return state;
   }
 };
 

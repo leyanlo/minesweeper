@@ -13,8 +13,10 @@ import Mine7 from '../images/sprites/mine-7.svg';
 import Mine8 from '../images/sprites/mine-8.svg';
 import MineCovered from '../images/sprites/mine-covered.svg';
 import MineExploded from '../images/sprites/mine-exploded.svg';
+import MineFlagged from '../images/sprites/mine-flagged.svg';
 import Mine from '../images/sprites/mine.svg';
 import { ActionType, GameContext, GameState, Mask } from './Game';
+import { VisuallyHidden } from './styled-components';
 
 const getMineUrl = (cell: number): string => {
   switch (cell) {
@@ -54,55 +56,87 @@ const WindowBodyBoard = (): JSX.Element => {
           `}
         >
           {row.map((cell, j) => {
-            if (state.mask[i][j] === Mask.Hidden) {
-              return (
-                // eslint-disable-next-line jsx-a11y/control-has-associated-label
-                <button
-                  key={`${i},${j}`}
-                  type="button"
-                  disabled={state.gameState !== GameState.Playing}
-                  css={css`
-                    border: none;
-                    padding: 0;
-                    width: 16px;
-                    height: 16px;
-                    background-image: url(${MineCovered});
-                    :active {
-                      background-image: url(${Mine0});
-                      :focus {
-                        outline: none;
+            switch (state.mask[i][j]) {
+              case Mask.Hidden:
+                return (
+                  <button
+                    key={`${i},${j}`}
+                    type="button"
+                    disabled={state.gameState !== GameState.Playing}
+                    css={css`
+                      border: none;
+                      padding: 0;
+                      width: 16px;
+                      height: 16px;
+                      background-image: url(${MineCovered});
+                      :active {
+                        background-image: url(${Mine0});
+                        :focus {
+                          outline: none;
+                        }
                       }
-                    }
-                    :focus {
-                      outline: 1px dotted black;
-                      outline-offset: -4px;
-                    }
-                  `}
-                  onClick={({ currentTarget }) => {
-                    dispatch({
-                      type: ActionType.Click,
-                      row: i,
-                      column: j,
-                    });
-                    // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
-                    currentTarget.blur();
-                  }}
-                />
-              );
+                      :focus {
+                        outline: 1px dotted black;
+                        outline-offset: -4px;
+                      }
+                    `}
+                    onContextMenu={event => {
+                      event.preventDefault();
+                      dispatch({
+                        type: ActionType.Flag,
+                        row: i,
+                        column: j,
+                      });
+                    }}
+                    onClick={({ currentTarget }) => {
+                      dispatch({
+                        type: ActionType.Click,
+                        row: i,
+                        column: j,
+                      });
+                      // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
+                      currentTarget.blur();
+                    }}
+                  >
+                    <VisuallyHidden>Uncover cell</VisuallyHidden>
+                  </button>
+                );
+              case Mask.Flagged:
+                return (
+                  <div
+                    key={`${i},${j}`}
+                    css={css`
+                      width: 16px;
+                      height: 16px;
+                      background-image: url(${MineFlagged});
+                    `}
+                    onContextMenu={event => {
+                      event.preventDefault();
+                      dispatch({
+                        type: ActionType.Flag,
+                        row: i,
+                        column: j,
+                      });
+                    }}
+                  />
+                );
+              default:
+                return (
+                  <div
+                    key={`${i},${j}`}
+                    css={css`
+                      width: 16px;
+                      height: 16px;
+                      background-image: url(${state.mask[i][j] === Mask.Exploded
+                        ? MineExploded
+                        : getMineUrl(cell)});
+                    `}
+                    onContextMenu={event => {
+                      event.preventDefault();
+                    }}
+                  />
+                );
             }
-
-            return (
-              <div
-                key={`${i},${j}`}
-                css={css`
-                  width: 16px;
-                  height: 16px;
-                  background-image: url(${state.mask[i][j] === Mask.Exploded
-                    ? MineExploded
-                    : getMineUrl(cell)});
-                `}
-              />
-            );
           })}
         </div>
       ))}

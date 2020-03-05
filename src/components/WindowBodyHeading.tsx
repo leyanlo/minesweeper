@@ -65,6 +65,7 @@ const HeadingNumber = ({ number }: { number: number }): JSX.Element => {
       css={css`
         border: 1px solid;
         border-color: #808080 #fff #fff #808080;
+        background-color: #000;
       `}
     >
       {displayString.split('').map((s, i) => (

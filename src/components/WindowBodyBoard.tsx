@@ -16,7 +16,7 @@ import CellFlagged from '../images/sprites/cell-flagged.svg';
 import CellMarked from '../images/sprites/cell-marked.svg';
 import MineExploded from '../images/sprites/mine-exploded.svg';
 import Mine from '../images/sprites/mine.svg';
-import { ActionType, Cell, GameContext, Mask } from './Game';
+import { ActionType, Cell, GameContext, GameState, Mask } from './Game';
 
 const CellUrlMap: { [K in Cell]: string } = {
   [-1]: Mine,
@@ -84,6 +84,9 @@ const WindowBodyBoard = (): JSX.Element => {
       }}
       onMouseDown={e => {
         e.preventDefault();
+        if (state.gameState !== GameState.Playing) {
+          return;
+        }
         const { row, column } = getCoordinates(e.target as HTMLElement);
         console.log('test: onMouseDown', e.buttons);
         setButtons(e.buttons);
@@ -110,7 +113,7 @@ const WindowBodyBoard = (): JSX.Element => {
       }}
       onMouseOut={e => {
         e.preventDefault();
-        if (hasTouch) {
+        if (hasTouch || state.gameState !== GameState.Playing) {
           return;
         }
         console.log('test: onMouseOut', e.buttons);
@@ -128,7 +131,7 @@ const WindowBodyBoard = (): JSX.Element => {
       }}
       onMouseOver={e => {
         e.preventDefault();
-        if (hasTouch) {
+        if (hasTouch || state.gameState !== GameState.Playing) {
           return;
         }
         const { row, column } = getCoordinates(e.target as HTMLElement);
@@ -149,6 +152,9 @@ const WindowBodyBoard = (): JSX.Element => {
       }}
       onMouseUp={e => {
         e.preventDefault();
+        if (state.gameState !== GameState.Playing) {
+          return;
+        }
         console.log('test: onMouseUp', e.buttons);
         const { row, column } = getCoordinates(e.target as HTMLElement);
         switch (buttons) {

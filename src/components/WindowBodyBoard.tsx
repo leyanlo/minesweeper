@@ -74,6 +74,10 @@ const WindowBodyBoard = (): JSX.Element => {
   const { state, dispatch } = React.useContext(GameContext);
   const [hasTouch, setTouch] = React.useState<boolean>(true);
   const [buttons, setButtons] = React.useState<number | null>(null);
+  const [
+    touchTimeoutId,
+    setTouchTimeoutId,
+  ] = React.useState<NodeJS.Timeout | null>(null);
 
   React.useEffect(() => {
     try {
@@ -83,6 +87,16 @@ const WindowBodyBoard = (): JSX.Element => {
     }
   }, []);
 
+  React.useEffect(
+    () => () => {
+      if (touchTimeoutId) {
+        clearTimeout(touchTimeoutId);
+        setTouchTimeoutId(null);
+      }
+    },
+    [touchTimeoutId, setTouchTimeoutId],
+  );
+
   const debouncedStopClick = React.useMemo(
     () =>
       debounce(
@@ -90,11 +104,15 @@ const WindowBodyBoard = (): JSX.Element => {
           dispatch({
             type: ActionType.StopClick,
           });
+          if (touchTimeoutId) {
+            clearTimeout(touchTimeoutId);
+            setTouchTimeoutId(null);
+          }
         },
         100,
         true,
       ),
-    [dispatch],
+    [dispatch, touchTimeoutId, setTouchTimeoutId],
   );
 
   return (
@@ -200,6 +218,19 @@ const WindowBodyBoard = (): JSX.Element => {
           row,
           column,
         });
+        setTouchTimeoutId(
+          setTimeout(() => {
+            dispatch({
+              type: ActionType.StopClick,
+            });
+            dispatch({
+              type: ActionType.Flag,
+              row,
+              column,
+            });
+            setTouchTimeoutId(null);
+          }, 500),
+        );
       }}
       onTouchMove={e => {
         e.preventDefault();
@@ -207,7 +238,7 @@ const WindowBodyBoard = (): JSX.Element => {
       }}
       onTouchEnd={e => {
         e.preventDefault();
-        if (!state.isClicking) {
+        if (!state.isClicking || state.gameState !== GameState.Playing) {
           return;
         }
         const { row, column } = getCoordinates(e.target as HTMLElement);
@@ -216,6 +247,10 @@ const WindowBodyBoard = (): JSX.Element => {
           row,
           column,
         });
+        if (touchTimeoutId) {
+          clearTimeout(touchTimeoutId);
+          setTouchTimeoutId(null);
+        }
       }}
     >
       {state.board.map((row, i) => (

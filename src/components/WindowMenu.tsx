@@ -2,8 +2,8 @@ import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 
-import MenuItemCheck from '../images/sprites/menu-item-check.svg';
 import MenuItemCheckFocused from '../images/sprites/menu-item-check-focused.svg';
+import MenuItemCheck from '../images/sprites/menu-item-check.svg';
 import { ActionType, GameContext, Level } from './Game';
 import { fadeIn } from './styled-components';
 

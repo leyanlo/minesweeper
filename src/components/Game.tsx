@@ -192,7 +192,8 @@ const onClickNumber = ({
       i >= nextMask.length ||
       j < 0 ||
       j >= nextMask[0].length ||
-      nextMask[i][j] === Mask.Visible
+      nextMask[i][j] === Mask.Visible ||
+      nextMask[i][j] === Mask.Flagged
     ) {
       continue;
     }
@@ -241,8 +242,12 @@ const onClick = ({
   state: State;
   row: number;
   column: number;
-}): State =>
-  state.board[row][column] !== -1
+}): State => {
+  if (state.mask[row][column] === Mask.Flagged) {
+    return state;
+  }
+
+  return state.board[row][column] !== -1
     ? onClickNumber({
         state,
         row,
@@ -259,6 +264,7 @@ const onClick = ({
         row,
         column,
       });
+};
 
 const onFlag = ({
   state,

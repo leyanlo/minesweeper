@@ -266,6 +266,82 @@ const onClick = ({
       });
 };
 
+const onStartChord = ({
+  state,
+  row,
+  column,
+}: {
+  state: State;
+  row: number;
+  column: number;
+}): State => ({
+  ...state,
+  mask: state.mask.map((r, i) =>
+    r.map((c, j) => {
+      if (i >= row - 1 && i <= row + 1 && j >= column - 1 && j <= column + 1) {
+        return c === Mask.Hidden
+          ? Mask.Clicking
+          : c === Mask.Marked
+          ? Mask.MarkedClicking
+          : c;
+      }
+      return c === Mask.Clicking ? Mask.Hidden : c;
+    }),
+  ),
+  isClicking: true,
+});
+
+const onChord = ({
+  state,
+  row,
+  column,
+}: {
+  state: State;
+  row: number;
+  column: number;
+}): State => {
+  // abort if cell not visible
+  if (state.mask[row][column] !== Mask.Visible) {
+    return onStopClick({ state });
+  }
+
+  const rows = state.board.length;
+  const columns = state.board[0].length;
+
+  let neighborFlags = 0;
+  for (let i = Math.max(row - 1, 0); i <= Math.min(row + 1, rows - 1); i++) {
+    for (
+      let j = Math.max(column - 1, 0);
+      j <= Math.min(column + 1, columns - 1);
+      j++
+    ) {
+      if (state.mask[i][j] === Mask.Flagged) {
+        neighborFlags++;
+      }
+    }
+  }
+  // abort if cell number does not match number of neighbors flagged
+  if (neighborFlags !== state.board[row][column]) {
+    return onStopClick({ state });
+  }
+
+  let newState = state;
+  for (let i = Math.max(row - 1, 0); i <= Math.min(row + 1, rows - 1); i++) {
+    for (
+      let j = Math.max(column - 1, 0);
+      j <= Math.min(column + 1, columns - 1);
+      j++
+    ) {
+      newState = onClick({
+        state: newState,
+        row: i,
+        column: j,
+      });
+    }
+  }
+
+  return newState;
+};
 const onFlag = ({
   state,
   row,
@@ -310,6 +386,8 @@ export enum ActionType {
   StartClick,
   StopClick,
   Click,
+  StartChord,
+  Chord,
   Flag,
   ToggleMarks,
 }
@@ -334,6 +412,16 @@ export type Action =
       column: number;
     }
   | {
+      type: ActionType.StartChord;
+      row: number;
+      column: number;
+    }
+  | {
+      type: ActionType.Chord;
+      row: number;
+      column: number;
+    }
+  | {
       type: ActionType.Flag;
       row: number;
       column: number;
@@ -352,6 +440,10 @@ const reducer = (state: State, action: Action): State => {
       return onStopClick({ state });
     case ActionType.Click:
       return onClick({ state, row: action.row, column: action.column });
+    case ActionType.StartChord:
+      return onStartChord({ state, row: action.row, column: action.column });
+    case ActionType.Chord:
+      return onChord({ state, row: action.row, column: action.column });
     case ActionType.Flag:
       return onFlag({ state, row: action.row, column: action.column });
     case ActionType.ToggleMarks:

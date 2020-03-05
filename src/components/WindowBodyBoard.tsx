@@ -149,7 +149,11 @@ const WindowBodyBoard = (): JSX.Element => {
             });
             break;
           case 3:
-            // TODO: handle chords
+            dispatch({
+              type: ActionType.StartChord,
+              row,
+              column,
+            });
             break;
           default:
         }
@@ -161,12 +165,10 @@ const WindowBodyBoard = (): JSX.Element => {
         }
         switch (e.buttons) {
           case 1:
+          case 3:
             dispatch({
               type: ActionType.StopClick,
             });
-            break;
-          case 3:
-            // TODO: handle chords
             break;
           default:
         }
@@ -186,7 +188,11 @@ const WindowBodyBoard = (): JSX.Element => {
             });
             break;
           case 3:
-            // TODO: handle chords
+            dispatch({
+              type: ActionType.StartChord,
+              row,
+              column,
+            });
             break;
           default:
         }
@@ -206,7 +212,11 @@ const WindowBodyBoard = (): JSX.Element => {
             });
             break;
           case 3:
-            // TODO: handle chords
+            dispatch({
+              type: ActionType.Chord,
+              row,
+              column,
+            });
             break;
           default:
         }

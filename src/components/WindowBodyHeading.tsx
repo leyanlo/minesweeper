@@ -14,6 +14,7 @@ import DisplayDigit7 from '../images/sprites/display-digit-7.svg';
 import DisplayDigit8 from '../images/sprites/display-digit-8.svg';
 import DisplayDigit9 from '../images/sprites/display-digit-9.svg';
 import FaceActive from '../images/sprites/face-active.svg';
+import FaceClicking from '../images/sprites/face-clicking.svg';
 import FaceLost from '../images/sprites/face-lost.svg';
 import FaceWon from '../images/sprites/face-won.svg';
 import Face from '../images/sprites/face.svg';
@@ -122,7 +123,7 @@ const WindowBodyHeading = (): JSX.Element => {
           width: 26px;
           height: 26px;
           background-image: url(${{
-            [GameState.Playing]: Face,
+            [GameState.Playing]: state.isClicking ? FaceClicking : Face,
             [GameState.Won]: FaceWon,
             [GameState.Lost]: FaceLost,
           }[state.gameState]});

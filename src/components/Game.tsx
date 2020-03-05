@@ -12,12 +12,26 @@ export enum Mask {
   Exploded,
   Flagged,
   Marked,
+  Clicking,
 }
 
 export enum GameState {
   Playing,
   Won,
   Lost,
+}
+
+export enum Cell {
+  Mine = -1,
+  Zero,
+  One,
+  Two,
+  Three,
+  Four,
+  Five,
+  Six,
+  Seven,
+  Eight,
 }
 
 const BOARD_INFO = {
@@ -100,6 +114,7 @@ type State = {
   startMs: number | null;
   endMs: number | null;
   gameState: GameState;
+  isClicking: boolean;
 };
 
 const init = (level: Level, state?: State): State => ({
@@ -111,6 +126,36 @@ const init = (level: Level, state?: State): State => ({
   startMs: null,
   endMs: null,
   gameState: GameState.Playing,
+  isClicking: false,
+});
+
+const onStartClick = ({
+  state,
+  row,
+  column,
+}: {
+  state: State;
+  row: number;
+  column: number;
+}): State => ({
+  ...state,
+  mask: state.mask.map((r, i) =>
+    r.map((c, j) => {
+      if (i === row && j === column) {
+        return c === Mask.Hidden ? Mask.Clicking : c;
+      }
+      return c === Mask.Clicking ? Mask.Hidden : c;
+    }),
+  ),
+  isClicking: true,
+});
+
+const onStopClick = ({ state }: { state: State }): State => ({
+  ...state,
+  mask: state.mask.map(r =>
+    r.map(c => (c === Mask.Clicking ? Mask.Hidden : c)),
+  ),
+  isClicking: false,
 });
 
 const onClickMine = ({
@@ -134,6 +179,7 @@ const onClickMine = ({
   ),
   endMs: Date.now(),
   gameState: GameState.Lost,
+  isClicking: false,
 });
 
 const onClickNumber = ({
@@ -190,6 +236,7 @@ const onClickNumber = ({
           gameState: GameState.Won,
         }
       : { mask: nextMask }),
+    isClicking: false,
   };
 };
 
@@ -248,9 +295,11 @@ const onFlag = ({
 
 export enum ActionType {
   Init,
+  StartClick,
+  StopClick,
   Click,
-  ToggleMarks,
   Flag,
+  ToggleMarks,
 }
 
 export type Action =
@@ -258,6 +307,14 @@ export type Action =
       type: ActionType.Init;
       level: Level;
       state: State;
+    }
+  | {
+      type: ActionType.StartClick;
+      row: number;
+      column: number;
+    }
+  | {
+      type: ActionType.StopClick;
     }
   | {
       type: ActionType.Click;
@@ -277,6 +334,10 @@ const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.Init:
       return init(action.level, state);
+    case ActionType.StartClick:
+      return onStartClick({ state, row: action.row, column: action.column });
+    case ActionType.StopClick:
+      return onStopClick({ state });
     case ActionType.Click:
       return onClick({ state, row: action.row, column: action.column });
     case ActionType.Flag:

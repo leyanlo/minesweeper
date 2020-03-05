@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import debounce from 'just-debounce-it';
 import React from 'react';
 
 import Cell0 from '../images/sprites/cell-0.svg';
@@ -13,8 +14,8 @@ import Cell7 from '../images/sprites/cell-7.svg';
 import Cell8 from '../images/sprites/cell-8.svg';
 import CellCovered from '../images/sprites/cell-covered.svg';
 import CellFlagged from '../images/sprites/cell-flagged.svg';
-import CellMarked from '../images/sprites/cell-marked.svg';
 import CellMarkedClicking from '../images/sprites/cell-marked-clicking.svg';
+import CellMarked from '../images/sprites/cell-marked.svg';
 import MineExploded from '../images/sprites/mine-exploded.svg';
 import MineWrong from '../images/sprites/mine-wrong.svg';
 import Mine from '../images/sprites/mine.svg';
@@ -82,6 +83,20 @@ const WindowBodyBoard = (): JSX.Element => {
     }
   }, []);
 
+  const debouncedStopClick = React.useMemo(
+    () =>
+      debounce(
+        () => {
+          dispatch({
+            type: ActionType.StopClick,
+          });
+        },
+        100,
+        true,
+      ),
+    [dispatch],
+  );
+
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events,jsx-a11y/mouse-events-have-key-events
     <div
@@ -97,7 +112,6 @@ const WindowBodyBoard = (): JSX.Element => {
           return;
         }
         const { row, column } = getCoordinates(e.target as HTMLElement);
-        console.log('test: onMouseDown', e.buttons);
         setButtons(e.buttons);
         switch (e.buttons) {
           case 1:
@@ -125,7 +139,6 @@ const WindowBodyBoard = (): JSX.Element => {
         if (hasTouch || state.gameState !== GameState.Playing) {
           return;
         }
-        console.log('test: onMouseOut', e.buttons);
         switch (e.buttons) {
           case 1:
             dispatch({
@@ -144,7 +157,6 @@ const WindowBodyBoard = (): JSX.Element => {
           return;
         }
         const { row, column } = getCoordinates(e.target as HTMLElement);
-        console.log('test: onMouseOver', e.buttons);
         switch (e.buttons) {
           case 1:
             dispatch({
@@ -164,7 +176,6 @@ const WindowBodyBoard = (): JSX.Element => {
         if (state.gameState !== GameState.Playing) {
           return;
         }
-        console.log('test: onMouseUp', e.buttons);
         const { row, column } = getCoordinates(e.target as HTMLElement);
         switch (buttons) {
           case 1:
@@ -181,20 +192,30 @@ const WindowBodyBoard = (): JSX.Element => {
         }
         setButtons(null);
       }}
-      onTouchEnd={e => {
+      onTouchStart={e => {
         e.preventDefault();
-        console.log('test: onTouchEnd');
-        // TODO: handle mobile
+        const { row, column } = getCoordinates(e.target as HTMLElement);
+        dispatch({
+          type: ActionType.StartClick,
+          row,
+          column,
+        });
       }}
       onTouchMove={e => {
         e.preventDefault();
-        console.log('test: onTouchMove');
-        // TODO: handle mobile
+        debouncedStopClick();
       }}
-      onTouchStart={e => {
+      onTouchEnd={e => {
         e.preventDefault();
-        console.log('test: onTouchStart');
-        // TODO: handle mobile
+        if (!state.isClicking) {
+          return;
+        }
+        const { row, column } = getCoordinates(e.target as HTMLElement);
+        dispatch({
+          type: ActionType.Click,
+          row,
+          column,
+        });
       }}
     >
       {state.board.map((row, i) => (

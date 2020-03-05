@@ -120,6 +120,8 @@ const WindowBodyBoard = (): JSX.Element => {
     <div
       css={css`
         background-color: #7b7b7b;
+        -webkit-touch-callout: none;
+        user-select: none;
       `}
       onContextMenu={e => {
         e.preventDefault();

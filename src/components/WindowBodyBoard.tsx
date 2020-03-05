@@ -15,10 +15,11 @@ import CellCovered from '../images/sprites/cell-covered.svg';
 import CellFlagged from '../images/sprites/cell-flagged.svg';
 import CellMarked from '../images/sprites/cell-marked.svg';
 import MineExploded from '../images/sprites/mine-exploded.svg';
+import MineWrong from '../images/sprites/mine-wrong.svg';
 import Mine from '../images/sprites/mine.svg';
-import { ActionType, Cell, GameContext, GameState, Mask } from './Game';
+import { ActionType, GameContext, GameState, Mask } from './Game';
 
-const CellUrlMap: { [K in Cell]: string } = {
+const CellUrlMap: { [cell: number]: string } = {
   [-1]: Mine,
   0: Cell0,
   1: Cell1,
@@ -36,7 +37,7 @@ const getBackgroundUrl = ({
   cell,
 }: {
   mask: Mask;
-  cell: Cell;
+  cell: number;
 }): string => {
   switch (mask) {
     case Mask.Visible:
@@ -49,6 +50,8 @@ const getBackgroundUrl = ({
       return CellMarked;
     case Mask.Clicking:
       return Cell0;
+    case Mask.Wrong:
+      return MineWrong;
     default:
       return CellCovered;
   }

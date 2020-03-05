@@ -13,25 +13,13 @@ export enum Mask {
   Flagged,
   Marked,
   Clicking,
+  Wrong,
 }
 
 export enum GameState {
   Playing,
   Won,
   Lost,
-}
-
-export enum Cell {
-  Mine = -1,
-  Zero,
-  One,
-  Two,
-  Three,
-  Four,
-  Five,
-  Six,
-  Seven,
-  Eight,
 }
 
 const BOARD_INFO = {
@@ -169,13 +157,12 @@ const onClickMine = ({
 }): State => ({
   ...state,
   mask: state.mask.map((r, i) =>
-    r.map((c, j) =>
-      state.board[i][j] !== -1
-        ? c
-        : i === row && j === column
-        ? Mask.Exploded
-        : Mask.Visible,
-    ),
+    r.map((c, j) => {
+      if (state.board[i][j] === -1) {
+        return i === row && j === column ? Mask.Exploded : Mask.Visible;
+      }
+      return c === Mask.Flagged ? Mask.Wrong : c;
+    }),
   ),
   endMs: Date.now(),
   gameState: GameState.Lost,

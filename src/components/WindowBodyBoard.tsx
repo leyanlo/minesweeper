@@ -14,6 +14,7 @@ import Cell8 from '../images/sprites/cell-8.svg';
 import CellCovered from '../images/sprites/cell-covered.svg';
 import CellFlagged from '../images/sprites/cell-flagged.svg';
 import CellMarked from '../images/sprites/cell-marked.svg';
+import CellMarkedClicking from '../images/sprites/cell-marked-clicking.svg';
 import MineExploded from '../images/sprites/mine-exploded.svg';
 import MineWrong from '../images/sprites/mine-wrong.svg';
 import Mine from '../images/sprites/mine.svg';
@@ -48,6 +49,8 @@ const getBackgroundUrl = ({
       return CellFlagged;
     case Mask.Marked:
       return CellMarked;
+    case Mask.MarkedClicking:
+      return CellMarkedClicking;
     case Mask.Clicking:
       return Cell0;
     case Mask.Wrong:

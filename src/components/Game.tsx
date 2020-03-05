@@ -12,6 +12,7 @@ export enum Mask {
   Exploded,
   Flagged,
   Marked,
+  MarkedClicking,
   Clicking,
   Wrong,
 }
@@ -130,7 +131,11 @@ const onStartClick = ({
   mask: state.mask.map((r, i) =>
     r.map((c, j) => {
       if (i === row && j === column) {
-        return c === Mask.Hidden ? Mask.Clicking : c;
+        return c === Mask.Hidden
+          ? Mask.Clicking
+          : c === Mask.Marked
+          ? Mask.MarkedClicking
+          : c;
       }
       return c === Mask.Clicking ? Mask.Hidden : c;
     }),
@@ -264,18 +269,31 @@ const onFlag = ({
   row: number;
   column: number;
 }): State => {
-  // do nothing if not playing
-  if (state.gameState !== GameState.Playing) {
+  // do nothing if not playing or if cell is visible
+  if (
+    state.gameState !== GameState.Playing ||
+    state.mask[row][column] === Mask.Visible
+  ) {
     return state;
   }
 
-  const isFlagged = state.mask[row][column] === Mask.Flagged;
   return {
     ...state,
-    mines: isFlagged ? state.mines + 1 : state.mines - 1,
+    mines:
+      state.mask[row][column] === Mask.Flagged
+        ? state.mines + 1
+        : state.mask[row][column] === Mask.Hidden && state.hasMarks
+        ? state.mines
+        : state.mines - 1,
     mask: state.mask.map((r, i) =>
       r.map((c, j) =>
-        i !== row || j !== column ? c : isFlagged ? Mask.Hidden : Mask.Flagged,
+        i !== row || j !== column
+          ? c
+          : state.mask[row][column] === Mask.Flagged
+          ? Mask.Hidden
+          : state.mask[row][column] === Mask.Hidden && state.hasMarks
+          ? Mask.Marked
+          : Mask.Flagged,
       ),
     ),
   };

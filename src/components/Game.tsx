@@ -221,6 +221,7 @@ const onClickNumber = ({
           ),
           endMs: Date.now(),
           gameState: GameState.Won,
+          mines: 0,
         }
       : { mask: nextMask }),
     isClicking: false,

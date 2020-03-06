@@ -146,7 +146,13 @@ const onStartClick = ({
 const onStopClick = ({ state }: { state: State }): State => ({
   ...state,
   mask: state.mask.map(r =>
-    r.map(c => (c === Mask.Clicking ? Mask.Hidden : c)),
+    r.map(c =>
+      c === Mask.Clicking
+        ? Mask.Hidden
+        : c === Mask.MarkedClicking
+        ? Mask.Marked
+        : c,
+    ),
   ),
   isClicking: false,
 });

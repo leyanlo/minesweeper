@@ -224,6 +224,9 @@ const WindowBodyBoard = (): JSX.Element => {
       }}
       onTouchStart={e => {
         e.preventDefault();
+        if (state.gameState !== GameState.Playing) {
+          return;
+        }
         const { row, column } = getCoordinates(e.target as HTMLElement);
         dispatch({
           type: ActionType.StartClick,

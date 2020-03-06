@@ -232,14 +232,25 @@ const WindowBodyBoard = (): JSX.Element => {
         });
         setTouchTimeoutId(
           setTimeout(() => {
-            dispatch({
-              type: ActionType.StopClick,
-            });
-            dispatch({
-              type: ActionType.Flag,
-              row,
-              column,
-            });
+            switch (state.mask[row][column]) {
+              case Mask.Hidden:
+              case Mask.MarkedClicking:
+              case Mask.Flagged:
+                dispatch({
+                  type: ActionType.Flag,
+                  row,
+                  column,
+                });
+                break;
+              case Mask.Visible:
+                dispatch({
+                  type: ActionType.Chord,
+                  row,
+                  column,
+                });
+                break;
+              default:
+            }
             setTouchTimeoutId(null);
           }, 500),
         );

@@ -243,7 +243,10 @@ const onClick = ({
   row: number;
   column: number;
 }): State => {
-  if (state.mask[row][column] === Mask.Flagged) {
+  if (
+    state.mask[row][column] === Mask.Flagged ||
+    state.mask[row][column] === Mask.Wrong
+  ) {
     return state;
   }
 
@@ -378,6 +381,7 @@ const onFlag = ({
           : Mask.Flagged,
       ),
     ),
+    isClicking: false,
   };
 };
 

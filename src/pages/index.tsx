@@ -10,7 +10,6 @@ export default function IndexPage(): JSX.Element {
       <main
         css={css`
           display: flex;
-          min-height: 100%;
         `}
       >
         <Window />

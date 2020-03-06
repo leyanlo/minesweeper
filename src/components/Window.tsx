@@ -10,7 +10,6 @@ const Window = (): JSX.Element => (
   <Game>
     <div
       css={css`
-        margin: auto;
         padding: 16px;
       `}
     >

@@ -32,10 +32,6 @@ export function Layout({ children }: LayoutProps): JSX.Element {
       font-weight: 700;
     }
 
-    html, body, #___gatsby, #gatsby-focus-wrapper {
-      height: 100%;
-    }
-
     body {
       background-color: #3a6ea5;
       font-family: 'Segoe UI', sans-serif;

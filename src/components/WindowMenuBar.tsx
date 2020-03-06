@@ -62,6 +62,22 @@ const WindowMenuBar = (): JSX.Element => {
           },
         ]}
       />
+      <WindowMenu
+        name="Help"
+        list={[
+          {
+            type: ItemType.Item,
+            name: 'GitHub',
+            onClick: () => {
+              window.open(
+                'https://github.com/leyanlo/minesweeper',
+                '_blank',
+                'noreferrer',
+              );
+            },
+          },
+        ]}
+      />
     </ul>
   );
 };

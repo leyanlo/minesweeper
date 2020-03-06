@@ -4,7 +4,6 @@ import React from 'react';
 
 import MenuItemCheckFocused from '../images/sprites/menu-item-check-focused.svg';
 import MenuItemCheck from '../images/sprites/menu-item-check.svg';
-import { ActionType, GameContext, Level } from './Game';
 import { fadeIn } from './styled-components';
 
 const menuButtonOpenCss = css`
@@ -100,8 +99,29 @@ const MenuDivider = (): JSX.Element => (
   />
 );
 
-const WindowMenu = (): JSX.Element => {
-  const { state, dispatch } = React.useContext(GameContext);
+export enum ItemType {
+  Item,
+  Divider,
+}
+
+type ListItem =
+  | {
+      type: ItemType.Item;
+      name: string;
+      onClick: () => void;
+      isChecked?: boolean;
+    }
+  | {
+      type: ItemType.Divider;
+    };
+
+const WindowMenu = ({
+  name,
+  list,
+}: {
+  name: string;
+  list: ListItem[];
+}): JSX.Element => {
   const [isOpen, setOpen] = React.useState<boolean>(false);
 
   const menuEl = React.useRef<HTMLLIElement>(null);
@@ -124,96 +144,65 @@ const WindowMenu = (): JSX.Element => {
   }, []);
 
   return (
-    <ul
-      css={css`
-        display: flex;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding-top: 1px;
-        padding-left: 0;
-        list-style-type: none;
-      `}
-    >
-      <li ref={menuEl}>
-        <MenuButton
-          type="button"
-          aria-haspopup="menu"
-          aria-expanded={isOpen}
-          isOpen={isOpen}
-          onClick={({ currentTarget }) => {
-            setOpen(!isOpen);
-            // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
-            currentTarget.blur();
-          }}
+    <li ref={menuEl}>
+      <MenuButton
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        isOpen={isOpen}
+        onClick={({ currentTarget }) => {
+          setOpen(!isOpen);
+          // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
+          currentTarget.blur();
+        }}
+      >
+        {name}
+      </MenuButton>
+      {isOpen && (
+        <div
+          role="menu"
+          css={css`
+            position: absolute;
+            border: 1px solid;
+            border-color: #d4d0c8 #404040 #404040 #d4d0c8;
+            box-shadow: 8px 8px 4px -4px rgba(0, 0, 0, 0.5);
+            animation: ${fadeIn} 150ms;
+          `}
         >
-          Game
-        </MenuButton>
-        {isOpen && (
           <div
-            role="menu"
             css={css`
-              position: absolute;
               border: 1px solid;
-              border-color: #d4d0c8 #404040 #404040 #d4d0c8;
-              box-shadow: 8px 8px 4px -4px rgba(0, 0, 0, 0.5);
-              animation: ${fadeIn} 150ms;
+              border-color: #fff #808080 #808080 #fff;
+              background-color: #d4d0c8;
+              padding: 1px;
+              min-width: 123px;
             `}
           >
-            <div
-              css={css`
-                border: 1px solid;
-                border-color: #fff #808080 #808080 #fff;
-                background-color: #d4d0c8;
-                padding: 1px;
-                min-width: 123px;
-              `}
-            >
-              <MenuItem
-                onClick={() => {
-                  dispatch({
-                    type: ActionType.Init,
-                    level: state.level,
-                    state,
-                  });
-                  setOpen(false);
-                }}
-              >
-                New
-              </MenuItem>
-              <MenuDivider />
-              {[Level.Beginner, Level.Intermediate, Level.Expert].map(level => (
-                <MenuItem
-                  key={level}
-                  onClick={() => {
-                    dispatch({
-                      type: ActionType.Init,
-                      level,
-                      state,
-                    });
-                    setOpen(false);
-                  }}
-                  isChecked={level === state.level}
-                >
-                  {level}
-                </MenuItem>
-              ))}
-              <MenuDivider />
-              <MenuItem
-                isChecked={state.hasMarks}
-                onClick={() => {
-                  dispatch({
-                    type: ActionType.ToggleMarks,
-                  });
-                  setOpen(false);
-                }}
-              >
-                Marks (?)
-              </MenuItem>
-            </div>
+            {list.map((item, i) => {
+              switch (item.type) {
+                case ItemType.Item:
+                  return (
+                    <MenuItem
+                      key={i}
+                      isChecked={item.isChecked}
+                      onClick={() => {
+                        item.onClick();
+                        setOpen(false);
+                      }}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  );
+                case ItemType.Divider:
+                  return <MenuDivider key={i} />;
+                default:
+                  return null;
+              }
+            })}
           </div>
-        )}
-      </li>
-    </ul>
+        </div>
+      )}
+    </li>
   );
 };
 

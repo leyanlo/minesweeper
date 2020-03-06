@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 import MinesweeperIcon from '../images/minesweeper-icon.png';
 import Game from './Game';
 import WindowBody from './WindowBody';
-import WindowMenu from './WindowMenu';
+import WindowMenuBar from './WindowMenuBar';
 
 const Window = (): JSX.Element => (
   <Game>
@@ -48,7 +48,7 @@ const Window = (): JSX.Element => (
             />
             Minesweeper
           </header>
-          <WindowMenu />
+          <WindowMenuBar />
           <WindowBody />
         </article>
       </div>

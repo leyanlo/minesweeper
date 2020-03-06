@@ -106,6 +106,19 @@ const WindowBodyHeading = (): JSX.Element => {
     };
   }, [state.startMs, state.endMs]);
 
+  const faceImageUrl = React.useMemo(() => {
+    switch (state.gameState) {
+      case GameState.Playing:
+        return state.isClicking ? FaceClicking : Face;
+      case GameState.Won:
+        return FaceWon;
+      case GameState.Lost:
+        return FaceLost;
+      default:
+        return Face;
+    }
+  }, [state.gameState, state.isClicking]);
+
   return (
     <div
       css={css`
@@ -123,11 +136,7 @@ const WindowBodyHeading = (): JSX.Element => {
           padding: 0;
           width: 26px;
           height: 26px;
-          background-image: url(${{
-            [GameState.Playing]: state.isClicking ? FaceClicking : Face,
-            [GameState.Won]: FaceWon,
-            [GameState.Lost]: FaceLost,
-          }[state.gameState]});
+          background-image: url(${faceImageUrl});
           :active {
             background-image: url(${FaceActive});
             :focus {

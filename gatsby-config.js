@@ -9,6 +9,14 @@ module.exports = {
   plugins: [
     'gatsby-plugin-emotion',
     {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-126651057-2',
+        head: true,
+        respectDNT: true,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-manifest',
       options: {
         ...siteMetadata,

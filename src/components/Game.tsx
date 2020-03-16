@@ -368,25 +368,30 @@ const onFlag = ({
     return state;
   }
 
+  let nextMines = state.mines;
+  const nextMask = [...state.mask];
+  switch (state.mask[row][column]) {
+    case Mask.Hidden:
+    case Mask.Clicking:
+      nextMines--;
+      nextMask[row][column] = Mask.Flagged;
+      break;
+    case Mask.Flagged:
+      nextMines++;
+      nextMask[row][column] = state.hasMarks ? Mask.Marked : Mask.Hidden;
+      break;
+    case Mask.Marked:
+    case Mask.MarkedClicking:
+      nextMask[row][column] = Mask.Hidden;
+      break;
+    default:
+      break;
+  }
+
   return {
     ...state,
-    mines:
-      state.mask[row][column] === Mask.Flagged
-        ? state.mines + 1
-        : state.mask[row][column] === Mask.Hidden && state.hasMarks
-        ? state.mines
-        : state.mines - 1,
-    mask: state.mask.map((r, i) =>
-      r.map((c, j) =>
-        i !== row || j !== column
-          ? c
-          : state.mask[row][column] === Mask.Flagged
-          ? Mask.Hidden
-          : state.mask[row][column] === Mask.Hidden && state.hasMarks
-          ? Mask.Marked
-          : Mask.Flagged,
-      ),
-    ),
+    mines: nextMines,
+    mask: nextMask,
     isClicking: false,
   };
 };

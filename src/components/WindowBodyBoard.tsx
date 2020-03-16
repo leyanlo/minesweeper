@@ -237,7 +237,7 @@ const WindowBodyBoard = (): JSX.Element => {
           setTimeout(() => {
             switch (state.mask[row][column]) {
               case Mask.Hidden:
-              case Mask.MarkedClicking:
+              case Mask.Marked:
               case Mask.Flagged:
                 dispatch({
                   type: ActionType.Flag,

@@ -10,13 +10,22 @@
     "plugin:jest/recommended",
     "plugin:testing-library/recommended",
     "plugin:testing-library/react",
-    "plugin:prettier/recommended",
+    "prettier",
     "prettier/@typescript-eslint",
     "prettier/react"
   ],
   "plugins": ["simple-import-sort"],
 
   "rules": {
+    // Auto-sort imports
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/sort": "error",
+
+    // Using a type system makes it safe enough to spread props
+    "react/jsx-props-no-spreading": "off",
+
+    // Explicit return types
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
@@ -24,20 +33,20 @@
       }
     ],
 
-    // Auto-sort imports
-    "sort-imports": "off",
-    "import/order": "off",
-    "simple-import-sort/sort": "error",
+    // Remove braces when possible
     "arrow-body-style": ["error"],
+
+    // More lenient rules
     "no-bitwise": "off",
     "no-continue": "off",
     "no-nested-ternary": "off",
     "no-plusplus": "off",
+
+    // Disallow unused expressions and variables
     "no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
     "no-unused-vars": "error",
 
-    // Using a type system makes it safe enough to spread props
-    "react/jsx-props-no-spreading": "off",
+    // Allow array index in keys
     "react/no-array-index-key": "off"
   }
 }

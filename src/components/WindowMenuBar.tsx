@@ -72,7 +72,7 @@ const WindowMenuBar = (): JSX.Element => {
               window.open(
                 'https://github.com/leyanlo/minesweeper',
                 '_blank',
-                'noreferrer',
+                'noopener noreferrer',
               );
             },
           },

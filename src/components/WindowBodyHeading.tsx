@@ -100,7 +100,7 @@ const WindowBodyHeading = (): JSX.Element => {
           endMs: state.endMs,
         }),
       );
-    }, 100);
+    }, 20);
     return () => {
       clearInterval(intervalId);
     };

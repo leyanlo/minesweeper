@@ -1,10 +1,9 @@
 import { css } from '@emotion/core';
-import styled from '@emotion/styled';
 import React from 'react';
 
 import MenuItemCheckFocused from '../images/sprites/menu-item-check-focused.svg';
 import MenuItemCheck from '../images/sprites/menu-item-check.svg';
-import { fadeIn } from './styled-components';
+import { fadeIn } from './styles';
 
 const menuButtonOpenCss = css`
   padding: 1px 4px 0 6px;
@@ -18,20 +17,6 @@ const menuButtonClosedCss = css`
   :hover {
     border-color: #fff #808080 #808080 #fff;
   }
-`;
-
-const MenuButton = styled.button<{ isOpen: boolean }>`
-  border: 1px solid transparent;
-  padding: 0 5px;
-  height: 18px;
-  :focus {
-    outline: none;
-  }
-  :active,
-  :focus {
-    ${menuButtonOpenCss};
-  }
-  ${({ isOpen }) => (isOpen ? menuButtonOpenCss : menuButtonClosedCss)};
 `;
 
 const MenuItem = ({
@@ -145,11 +130,23 @@ const WindowMenu = ({
 
   return (
     <li ref={menuEl}>
-      <MenuButton
+      <button
+        css={css`
+          border: 1px solid transparent;
+          padding: 0 5px;
+          height: 18px;
+          :focus {
+            outline: none;
+          }
+          :active,
+          :focus {
+            ${menuButtonOpenCss};
+          }
+          ${isOpen ? menuButtonOpenCss : menuButtonClosedCss};
+        `}
         type="button"
         aria-haspopup="menu"
         aria-expanded={isOpen}
-        isOpen={isOpen}
         onClick={({ currentTarget }) => {
           setOpen(!isOpen);
           // https://bugs.chromium.org/p/chromium/issues/detail?id=1038823
@@ -157,7 +154,7 @@ const WindowMenu = ({
         }}
       >
         {name}
-      </MenuButton>
+      </button>
       {isOpen && (
         <div
           role="menu"

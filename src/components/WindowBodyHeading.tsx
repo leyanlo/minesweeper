@@ -19,7 +19,7 @@ import FaceLost from '../images/sprites/face-lost.svg';
 import FaceWon from '../images/sprites/face-won.svg';
 import Face from '../images/sprites/face.svg';
 import { ActionType, GameContext, GameState } from './Game';
-import { VisuallyHidden } from './styled-components';
+import { visuallyHiddenCss } from './styles';
 
 const getDisplayNumberSrc = (s: string): string => {
   switch (s) {
@@ -158,7 +158,7 @@ const WindowBodyHeading = (): JSX.Element => {
           currentTarget.blur();
         }}
       >
-        <VisuallyHidden>New game</VisuallyHidden>
+        <div css={visuallyHiddenCss}>New game</div>
       </button>
       <HeadingNumber number={time} />
     </div>

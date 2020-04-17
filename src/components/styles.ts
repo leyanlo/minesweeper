@@ -1,12 +1,11 @@
-import { keyframes } from '@emotion/core';
-import styled from '@emotion/styled';
+import { css, keyframes } from '@emotion/core';
 
 export const fadeIn = keyframes`
   from { opacity: 0; }
   to   { opacity: 1; }
 `;
 
-export const VisuallyHidden = styled.div`
+export const visuallyHiddenCss = css`
   position: absolute;
   height: 1px;
   width: 1px;

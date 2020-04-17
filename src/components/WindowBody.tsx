@@ -1,11 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import styled from '@emotion/styled';
 
 import WindowBodyBoard from './WindowBodyBoard';
 import WindowBodyHeading from './WindowBodyHeading';
 
-const BodySection = styled.section`
+const bodySectionCss = css`
   border: 2px solid;
   border-color: #808080 #fff #fff #808080;
   :not(:last-child) {
@@ -23,12 +22,12 @@ const WindowBody = (): JSX.Element => (
       border-color: #fff;
     `}
   >
-    <BodySection>
+    <section css={bodySectionCss}>
       <WindowBodyHeading />
-    </BodySection>
-    <BodySection>
+    </section>
+    <section css={bodySectionCss}>
       <WindowBodyBoard />
-    </BodySection>
+    </section>
   </div>
 );
 

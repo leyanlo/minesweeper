@@ -19,11 +19,11 @@ const menuButtonClosedCss = css`
 
 const MenuItem = ({
   children,
-  icon,
+  Icon,
   onClick,
 }: {
   children: React.ReactNode;
-  icon?: Icon;
+  Icon?: React.ElementType;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }): JSX.Element => (
   <button
@@ -47,23 +47,24 @@ const MenuItem = ({
     role="menuitem"
     onClick={onClick}
   >
-    {icon ? (
+    {Icon ? (
       <div
         css={css`
           position: absolute;
           margin-top: 2px;
           margin-left: -14px;
-          background-image: url(${icon.default});
           width: 11px;
           height: 11px;
+          display: flex;
           button:hover > &,
           button:focus > & {
-            background-image: url(${icon.focused});
+            color: #fff;
           }
         `}
-      />
+      >
+        <Icon />
+      </div>
     ) : null}
-
     {children}
   </button>
 );
@@ -85,17 +86,12 @@ export enum ItemType {
   Divider,
 }
 
-type Icon = {
-  default: string;
-  focused: string;
-};
-
 type ListItem =
   | {
       type: ItemType.Item;
       name: string;
       onClick: () => void;
-      icon?: Icon;
+      Icon?: React.ElementType;
     }
   | {
       type: ItemType.Divider;
@@ -182,7 +178,7 @@ const WindowMenu = ({
                   return (
                     <MenuItem
                       key={i}
-                      icon={item.icon}
+                      Icon={item.Icon}
                       onClick={() => {
                         item.onClick();
                         setOpen(false);

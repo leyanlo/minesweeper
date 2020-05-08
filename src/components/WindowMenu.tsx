@@ -1,8 +1,6 @@
 import { css } from '@emotion/core';
 import React from 'react';
 
-import MenuItemCheckFocused from '../images/sprites/menu-item-check-focused.svg';
-import MenuItemCheck from '../images/sprites/menu-item-check.svg';
 import { fadeIn } from './styles';
 
 const menuButtonOpenCss = css`
@@ -21,11 +19,11 @@ const menuButtonClosedCss = css`
 
 const MenuItem = ({
   children,
-  isChecked,
+  icon,
   onClick,
 }: {
   children: React.ReactNode;
-  isChecked?: boolean;
+  icon?: Icon;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }): JSX.Element => (
   <button
@@ -44,30 +42,28 @@ const MenuItem = ({
         background: #0b246a;
         color: #fff;
       }
-      ${isChecked
-        ? `
-              ::before {
-                content: '';
-                position: absolute;
-                margin-top: 2px;
-                margin-left: -13px;
-                background-image: url(${MenuItemCheck});
-                width: 9px;
-                height: 11px;
-              }
-              :hover,
-              :focus {
-                ::before {
-                  background-image: url(${MenuItemCheckFocused});
-                }
-              }
-            `
-        : ``};
     `}
     type="button"
     role="menuitem"
     onClick={onClick}
   >
+    {icon ? (
+      <div
+        css={css`
+          position: absolute;
+          margin-top: 2px;
+          margin-left: -14px;
+          background-image: url(${icon.default});
+          width: 11px;
+          height: 11px;
+          button:hover > &,
+          button:focus > & {
+            background-image: url(${icon.focused});
+          }
+        `}
+      />
+    ) : null}
+
     {children}
   </button>
 );
@@ -89,12 +85,17 @@ export enum ItemType {
   Divider,
 }
 
+type Icon = {
+  default: string;
+  focused: string;
+};
+
 type ListItem =
   | {
       type: ItemType.Item;
       name: string;
       onClick: () => void;
-      isChecked?: boolean;
+      icon?: Icon;
     }
   | {
       type: ItemType.Divider;
@@ -181,7 +182,7 @@ const WindowMenu = ({
                   return (
                     <MenuItem
                       key={i}
-                      isChecked={item.isChecked}
+                      icon={item.icon}
                       onClick={() => {
                         item.onClick();
                         setOpen(false);

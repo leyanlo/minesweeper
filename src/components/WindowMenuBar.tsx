@@ -1,8 +1,15 @@
 import { css } from '@emotion/core';
 import React from 'react';
 
+import MenuItemCheckFocused from '../images/sprites/menu-item-check-focused.svg';
+import MenuItemCheck from '../images/sprites/menu-item-check.svg';
 import { ActionType, GameContext, Level } from './Game';
 import WindowMenu, { ItemType } from './WindowMenu';
+
+const checkIcon = {
+  default: MenuItemCheck,
+  focused: MenuItemCheckFocused
+}
 
 const WindowMenuBar = (): JSX.Element => {
   const { state, dispatch } = React.useContext(GameContext);
@@ -45,7 +52,7 @@ const WindowMenuBar = (): JSX.Element => {
                 state,
               });
             },
-            isChecked: level === state.level,
+            ...(level === state.level ? { icon: checkIcon } : {}),
           })),
           {
             type: ItemType.Divider,
@@ -58,7 +65,7 @@ const WindowMenuBar = (): JSX.Element => {
                 type: ActionType.ToggleMarks,
               });
             },
-            isChecked: state.hasMarks,
+            ...(state.hasMarks ? { icon: checkIcon } : {}),
           },
         ]}
       />

@@ -18,7 +18,7 @@ import FaceClicking from '../images/sprites/face-clicking.svg';
 import FaceLost from '../images/sprites/face-lost.svg';
 import FaceWon from '../images/sprites/face-won.svg';
 import Face from '../images/sprites/face.svg';
-import { ActionType, GameContext, GameState } from './Game';
+import GameContext, { ActionType, PlayingState } from './GameContext';
 import { visuallyHiddenCss } from './styles';
 
 const getDisplayNumberSrc = (s: string): string => {
@@ -89,7 +89,7 @@ const getTime = ({
     : ~~((endMs - startMs) / 1000);
 
 const WindowBodyHeading = (): JSX.Element => {
-  const { state, dispatch } = React.useContext(GameContext);
+  const [state, dispatch ] = React.useContext(GameContext);
   const [time, setTime] = React.useState<number>(0);
 
   React.useEffect(() => {
@@ -107,17 +107,17 @@ const WindowBodyHeading = (): JSX.Element => {
   }, [state.startMs, state.endMs]);
 
   const faceImageUrl = React.useMemo(() => {
-    switch (state.gameState) {
-      case GameState.Playing:
+    switch (state.playingState) {
+      case PlayingState.Playing:
         return state.isClicking ? FaceClicking : Face;
-      case GameState.Won:
+      case PlayingState.Won:
         return FaceWon;
-      case GameState.Lost:
+      case PlayingState.Lost:
         return FaceLost;
       default:
         return Face;
     }
-  }, [state.gameState, state.isClicking]);
+  }, [state.playingState, state.isClicking]);
 
   return (
     <div

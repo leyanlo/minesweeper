@@ -1,7 +1,7 @@
 import { css } from '@emotion/core';
 import React from 'react';
 
-import { ActionType, GameContext, Level } from './Game';
+import GameContext, { ActionType, Level } from './GameContext';
 import WindowMenu, { ItemType } from './WindowMenu';
 
 const CheckIcon = (): JSX.Element => (
@@ -45,7 +45,7 @@ const MediumIcon = (): JSX.Element => (
 );
 
 const WindowMenuBar = (): JSX.Element => {
-  const { state, dispatch } = React.useContext(GameContext);
+  const [state, dispatch] = React.useContext(GameContext);
 
   return (
     <ul

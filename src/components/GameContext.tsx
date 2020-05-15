@@ -17,7 +17,7 @@ export enum Mask {
   Wrong,
 }
 
-export enum GameState {
+export enum PlayingState {
   Playing,
   Won,
   Lost,
@@ -94,7 +94,7 @@ const createMask = (level: Level): Mask[][] => {
   return [...Array(rows)].map(() => [...Array(columns)].map(() => Mask.Hidden));
 };
 
-type State = {
+type GameState = {
   level: Level;
   hasMarks: boolean;
   mines: number;
@@ -102,11 +102,11 @@ type State = {
   mask: Mask[][];
   startMs: number | null;
   endMs: number | null;
-  gameState: GameState;
+  playingState: PlayingState;
   isClicking: boolean;
 };
 
-const init = (level: Level, state?: State): State => ({
+const init = (level: Level, state?: GameState): GameState => ({
   level,
   hasMarks: state?.hasMarks || false,
   mines: BOARD_INFO[level].mines,
@@ -114,7 +114,7 @@ const init = (level: Level, state?: State): State => ({
   mask: createMask(level),
   startMs: null,
   endMs: null,
-  gameState: GameState.Playing,
+  playingState: PlayingState.Playing,
   isClicking: false,
 });
 
@@ -123,10 +123,10 @@ const onStartClick = ({
   row,
   column,
 }: {
-  state: State;
+  state: GameState;
   row: number;
   column: number;
-}): State => ({
+}): GameState => ({
   ...state,
   mask: state.mask.map((r, i) =>
     r.map((c, j) => {
@@ -143,7 +143,7 @@ const onStartClick = ({
   isClicking: true,
 });
 
-const onStopClick = ({ state }: { state: State }): State => ({
+const onStopClick = ({ state }: { state: GameState }): GameState => ({
   ...state,
   mask: state.mask.map(r =>
     r.map(c =>
@@ -162,10 +162,10 @@ const onClickMine = ({
   row,
   column,
 }: {
-  state: State;
+  state: GameState;
   row: number;
   column: number;
-}): State => ({
+}): GameState => ({
   ...state,
   mask: state.mask.map((r, i) =>
     r.map((c, j) => {
@@ -176,7 +176,7 @@ const onClickMine = ({
     }),
   ),
   endMs: Date.now(),
-  gameState: GameState.Lost,
+  playingState: PlayingState.Lost,
   isClicking: false,
 });
 
@@ -185,10 +185,10 @@ const onClickNumber = ({
   row,
   column,
 }: {
-  state: State;
+  state: GameState;
   row: number;
   column: number;
-}): State => {
+}): GameState => {
   const checks = [[row, column]];
   const nextMask = [...state.mask];
   for (let check = checks.pop(); check; check = checks.pop()) {
@@ -232,7 +232,7 @@ const onClickNumber = ({
             r.map((c, j) => (state.board[i][j] !== -1 ? c : Mask.Flagged)),
           ),
           endMs: Date.now(),
-          gameState: GameState.Won,
+          gameState: PlayingState.Won,
           mines: 0,
         }
       : { mask: nextMask }),
@@ -245,10 +245,10 @@ const onClick = ({
   row,
   column,
 }: {
-  state: State;
+  state: GameState;
   row: number;
   column: number;
-}): State => {
+}): GameState => {
   if (
     state.mask[row][column] === Mask.Flagged ||
     state.mask[row][column] === Mask.Wrong
@@ -280,10 +280,10 @@ const onStartChord = ({
   row,
   column,
 }: {
-  state: State;
+  state: GameState;
   row: number;
   column: number;
-}): State => ({
+}): GameState => ({
   ...state,
   mask: state.mask.map((r, i) =>
     r.map((c, j) => {
@@ -305,10 +305,10 @@ const onChord = ({
   row,
   column,
 }: {
-  state: State;
+  state: GameState;
   row: number;
   column: number;
-}): State => {
+}): GameState => {
   // abort if cell not visible
   if (state.mask[row][column] !== Mask.Visible) {
     return onStopClick({ state });
@@ -356,13 +356,13 @@ const onFlag = ({
   row,
   column,
 }: {
-  state: State;
+  state: GameState;
   row: number;
   column: number;
-}): State => {
+}): GameState => {
   // do nothing if not playing or if cell is visible
   if (
-    state.gameState !== GameState.Playing ||
+    state.playingState !== PlayingState.Playing ||
     state.mask[row][column] === Mask.Visible
   ) {
     return state;
@@ -407,11 +407,11 @@ export enum ActionType {
   ToggleMarks,
 }
 
-export type Action =
+export type GameAction =
   | {
       type: ActionType.Init;
       level: Level;
-      state: State;
+      state: GameState;
     }
   | {
       type: ActionType.StartClick;
@@ -445,7 +445,7 @@ export type Action =
       type: ActionType.ToggleMarks;
     };
 
-const reducer = (state: State, action: Action): State => {
+const reducer = (state: GameState, action: GameAction): GameState => {
   switch (action.type) {
     case ActionType.Init:
       return init(action.level, state);
@@ -472,19 +472,21 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-export const GameContext = React.createContext({
-  state: init(Level.Beginner),
-  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-  dispatch: (action: Action) => {},
-});
+const GameContext = React.createContext<
+  [GameState, React.Dispatch<GameAction>]
+>([init(Level.Beginner), (action: GameAction) => {}]);
 
-const Game = ({ children }: { children: React.ReactNode }): JSX.Element => {
-  const [state, dispatch] = React.useReducer(reducer, Level.Beginner, init);
+export default GameContext;
+
+export const GameContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element => {
+  const providerValue = React.useReducer(reducer, Level.Beginner, init);
   return (
-    <GameContext.Provider value={{ state, dispatch }}>
+    <GameContext.Provider value={providerValue}>
       {children}
     </GameContext.Provider>
   );
 };
-
-export default Game;

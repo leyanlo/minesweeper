@@ -37,14 +37,12 @@
     "arrow-body-style": ["error"],
 
     // More lenient rules
+    "@typescript-eslint/no-unused-vars": "off",
+    "import/prefer-default-export": "off",
     "no-bitwise": "off",
     "no-continue": "off",
     "no-nested-ternary": "off",
     "no-plusplus": "off",
-
-    // Disallow unused expressions and variables
-    "no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
-    "no-unused-vars": "error",
 
     // Allow array index in keys
     "react/no-array-index-key": "off"

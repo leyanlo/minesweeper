@@ -2,12 +2,12 @@
 import { css, jsx } from '@emotion/core';
 
 import MinesweeperIcon from '../images/minesweeper-icon.png';
-import Game from './Game';
+import { GameContextProvider } from './GameContext';
 import WindowBody from './WindowBody';
 import WindowMenuBar from './WindowMenuBar';
 
 const Window = (): JSX.Element => (
-  <Game>
+  <GameContextProvider>
     <div
       css={css`
         padding: 16px;
@@ -53,7 +53,7 @@ const Window = (): JSX.Element => (
         </article>
       </div>
     </div>
-  </Game>
+  </GameContextProvider>
 );
 
 export default Window;

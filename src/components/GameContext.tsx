@@ -232,7 +232,7 @@ const onClickNumber = ({
             r.map((c, j) => (state.board[i][j] !== -1 ? c : Mask.Flagged)),
           ),
           endMs: Date.now(),
-          gameState: PlayingState.Won,
+          playingState: PlayingState.Won,
           mines: 0,
         }
       : { mask: nextMask }),

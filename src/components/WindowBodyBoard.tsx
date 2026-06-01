@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import debounce from 'just-debounce-it';
 import React from 'react';
 
@@ -14,11 +14,11 @@ import Cell7 from '../images/sprites/cell-7.svg';
 import Cell8 from '../images/sprites/cell-8.svg';
 import CellCovered from '../images/sprites/cell-covered.svg';
 import CellFlagged from '../images/sprites/cell-flagged.svg';
-import CellMarkedClicking from '../images/sprites/cell-marked-clicking.svg';
 import CellMarked from '../images/sprites/cell-marked.svg';
+import CellMarkedClicking from '../images/sprites/cell-marked-clicking.svg';
+import Mine from '../images/sprites/mine.svg';
 import MineExploded from '../images/sprites/mine-exploded.svg';
 import MineWrong from '../images/sprites/mine-wrong.svg';
-import Mine from '../images/sprites/mine.svg';
 import GameContext, { ActionType, Mask, PlayingState } from './GameContext';
 
 const CellUrlMap: { [cell: number]: string } = {
@@ -158,6 +158,7 @@ const WindowBodyBoard = (): JSX.Element => {
           default:
         }
       }}
+      // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
       onMouseOut={e => {
         e.preventDefault();
         if (hasTouch || state.playingState !== PlayingState.Playing) {
@@ -173,6 +174,7 @@ const WindowBodyBoard = (): JSX.Element => {
           default:
         }
       }}
+      // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
       onMouseOver={e => {
         e.preventDefault();
         if (hasTouch || state.playingState !== PlayingState.Playing) {

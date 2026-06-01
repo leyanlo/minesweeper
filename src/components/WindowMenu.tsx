@@ -1,4 +1,6 @@
-import { css } from '@emotion/core';
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
 import React from 'react';
 
 import { fadeIn } from './styles';
@@ -68,6 +70,10 @@ const MenuItem = ({
     {children}
   </button>
 );
+
+MenuItem.defaultProps = {
+  Icon: undefined,
+};
 
 const MenuDivider = (): JSX.Element => (
   <hr

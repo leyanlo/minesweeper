@@ -19,7 +19,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        ...siteMetadata,
+        name: siteMetadata.name,
+        description: siteMetadata.description,
         display: 'minimal-ui',
         theme_color: '#d4d0c8',
         background_color: '#3a6ea5',

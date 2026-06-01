@@ -1,4 +1,6 @@
-import { css } from '@emotion/core';
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
 import React from 'react';
 
 import GameContext, { ActionType, Level } from './GameContext';

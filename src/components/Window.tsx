@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 
 import MinesweeperIcon from '../images/minesweeper-icon.png';
 import { GameContextProvider } from './GameContext';

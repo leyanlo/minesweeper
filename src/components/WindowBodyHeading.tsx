@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import React from 'react';
 
 import DisplayDigitHyphen from '../images/sprites/display-digit--.svg';
@@ -13,11 +13,11 @@ import DisplayDigit6 from '../images/sprites/display-digit-6.svg';
 import DisplayDigit7 from '../images/sprites/display-digit-7.svg';
 import DisplayDigit8 from '../images/sprites/display-digit-8.svg';
 import DisplayDigit9 from '../images/sprites/display-digit-9.svg';
+import Face from '../images/sprites/face.svg';
 import FaceActive from '../images/sprites/face-active.svg';
 import FaceClicking from '../images/sprites/face-clicking.svg';
 import FaceLost from '../images/sprites/face-lost.svg';
 import FaceWon from '../images/sprites/face-won.svg';
-import Face from '../images/sprites/face.svg';
 import GameContext, { ActionType, PlayingState } from './GameContext';
 import { visuallyHiddenCss } from './styles';
 

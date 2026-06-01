@@ -3,6 +3,7 @@
   "env": { "browser": true },
   "parserOptions": { "project": "./tsconfig.json" },
   "extends": [
+    "airbnb",
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -20,10 +21,11 @@
     // Auto-sort imports
     "sort-imports": "off",
     "import/order": "off",
-    "simple-import-sort/sort": "error",
+    "simple-import-sort/imports": "error",
 
     // Using a type system makes it safe enough to spread props
     "react/jsx-props-no-spreading": "off",
+    "react/no-unknown-property": "off",
 
     // Explicit return types
     "@typescript-eslint/explicit-function-return-type": [

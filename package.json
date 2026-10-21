@@ -85,6 +85,7 @@
     "postcss@^8": "8.5.31",
     "tmp": "0.2.7",
     "trim@0.0.x": "0.0.3",
-    "trim-newlines@^3": "3.0.1"
+    "trim-newlines@^3": "3.0.1",
+    "path-to-regexp@0.1.x": "0.1.13"
   }
 }

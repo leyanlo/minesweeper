@@ -73,6 +73,18 @@
   },
   "overrides": {
     "cheerio": "1.0.0-rc.12",
-    "sharp": "0.35.5"
+    "sharp": "0.35.5",
+    "loader-utils@^1": "1.4.2",
+    "loader-utils@^2": "2.0.4",
+    "lodash@^4": "4.18.1",
+    "flatted@^3": "3.4.4",
+    "immutable@^3": "3.8.4",
+    "immutable@^4": "4.3.9",
+    "json5@^1": "1.0.2",
+    "cross-spawn@^6": "6.0.6",
+    "postcss@^8": "8.5.31",
+    "tmp": "0.2.7",
+    "trim@0.0.x": "0.0.3",
+    "trim-newlines@^3": "3.0.1"
   }
 }

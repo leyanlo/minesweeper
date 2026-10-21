@@ -21,30 +21,30 @@
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@types/react": "^16.9.19",
+    "@emotion/styled": "^11.14.0",
+    "@types/react": "^18.3.0",
     "@types/react-helmet": "^5.0.15",
-    "gatsby": "^3.14.6",
-    "gatsby-plugin-emotion": "^6.14.0",
-    "gatsby-plugin-google-analytics": "^3.14.0",
-    "gatsby-plugin-manifest": "^3.14.0",
-    "gatsby-plugin-offline": "^4.14.0",
-    "gatsby-plugin-react-helmet": "^4.14.0",
-    "gatsby-plugin-typescript": "^3.14.0",
+    "gatsby": "5.16.1",
+    "gatsby-plugin-emotion": "8.16.0",
+    "gatsby-plugin-google-analytics": "5.16.0",
+    "gatsby-plugin-manifest": "5.16.0",
+    "gatsby-plugin-offline": "6.16.0",
+    "gatsby-plugin-react-helmet": "6.16.0",
+    "gatsby-plugin-typescript": "5.16.0",
     "just-debounce-it": "^1.1.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-helmet": "^6.1.0",
     "sanitize.css": "^11.0.0",
-    "typescript": "^4.5.5"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@testing-library/react": "^9.4.0",
+    "@testing-library/react": "^16.3.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^29.5.14",
     "@types/just-debounce-it": "^1.1.0",
     "@types/node": "^16.18.126",
-    "@types/react-dom": "^16.9.25",
+    "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^7.32.0",
@@ -64,7 +64,7 @@
     "@emotion/jest": "^11.13.0",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
-    "react-test-renderer": "^16.12.0",
+    "react-test-renderer": "18.3.1",
     "ts-jest": "^29.4.6"
   },
   "repository": {
@@ -72,6 +72,7 @@
     "url": "https://github.com/leyanlo/minesweeper"
   },
   "overrides": {
-    "cheerio": "1.0.0-rc.12"
+    "cheerio": "1.0.0-rc.12",
+    "sharp": "0.35.5"
   }
 }
